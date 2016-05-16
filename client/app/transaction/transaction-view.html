@@ -1,0 +1,9 @@
+<ng-include src="'app/transaction/transaction-nav.html'"></ng-include>
+<h3><b>Account:</b> {{ vm.transaction.account }}</h3>
+<p><b>Payment Type:</b> {{vm.transaction.type}}</p>
+<p><b>Payment Amount:</b> {{vm.transaction.pay | currency}}</p>
+<p><b>Due Date:</b> {{vm.transaction.dueDate | date:'M/d/yyyy'}}</p>
+<p><b>Paid: <input type="checkbox" ng-model="vm.transaction.isPaid" ng-disabled="true" /></p>
+<!--<youtube src="movie.url"></youtube>-->
+<br/>
+<a ng-href="/#/transactions" >&lt;&lt; Transaction List</a>

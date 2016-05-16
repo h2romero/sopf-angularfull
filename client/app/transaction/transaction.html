@@ -1,0 +1,29 @@
+<a class="btn btn-primary" href="/#/create/transaction"><span class="glyphicon glyphicon-plus"></span> Create Transaction</a>
+<br/>
+<table class="table table-striped">
+  <thead>
+  <th>Account</th>
+  <th>Type</th>
+  <th>Pay</th>
+  <th>Due Date</th>
+  <th>Is Paid</th>
+  <th>Operations</th>
+  </thead>
+  <tbody>
+  <tr ng-repeat="transaction in vm.transactions">
+    <td><a ng-href="/#/transaction/{{ transaction._id }}">{{transaction.account}}</a></td>
+    <td>{{transaction.type}}</td>
+    <td>{{transaction.pay | currency}}</td>
+    <td>{{transaction.dueDate | date:'M/d/yyyy'}}</td>
+    <td>{{transaction.isPaid}}</td>
+    <!--<td><a ng-href="/#/transaction/{{ transaction._id }}">{{ transaction.title }}</a></td>-->
+    <!--<td>{{ transaction.url }}</td>-->
+    <td>
+      <div class="button-group">
+        <a ng-href="/#/transaction/{{ transaction._id }}/edit" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span></a>
+        <a ng-href="/#/transaction/{{ transaction._id }}/delete" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle"></span></a>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
