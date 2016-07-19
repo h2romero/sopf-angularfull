@@ -32,6 +32,10 @@ var TransactionSchema = new Schema({
   owner: {
     type: Schema.ObjectId,
     ref: 'User'
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
 
 });
