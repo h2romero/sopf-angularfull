@@ -3,9 +3,17 @@
 var _ = require('lodash');
 var Transaction = require('./transaction.model');
 
-// Get list of transactions
+// // Get list of transactions
+// exports.index = function(req, res) {
+//   Transaction.find(function (err, transactions) {
+//     if(err) { return handleError(res, err); }
+//     return res.status(200).json(transactions);
+//   });
+// };
+
+// Get list of transactions by owner
 exports.index = function(req, res) {
-  Transaction.find(function (err, transactions) {
+  Transaction.find({owner: req.params.owner}, function (err, transactions) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(transactions);
   });
