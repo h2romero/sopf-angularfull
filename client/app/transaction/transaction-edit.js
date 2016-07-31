@@ -8,7 +8,7 @@
  * Controller of the clientApp
  */
 angular.module('sopfApp')
-  .controller('TransactionEditCtrl', function ($http, $stateParams, $location) {
+  .controller('TransactionEditCtrl', function ($http, $stateParams, $location, Auth) {
     var vm = this;
     vm.transaction = {};
     vm.editTransaction = true;
@@ -20,7 +20,7 @@ angular.module('sopfApp')
     //    })
     //  }
     //});
-    $http.get('api/transactions/' + $stateParams.id).success(function(transaction){
+    $http.get('api/transactions/' + Auth.getCurrentUser()._id + '/' + $stateParams.id).success(function(transaction){
       vm.transaction = transaction;
       vm.saveTransaction = function () {
         $http.put('/api/transactions/' + vm.transaction._id, vm.transaction).then(function() {

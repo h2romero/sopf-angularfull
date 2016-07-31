@@ -19,14 +19,24 @@ exports.index = function(req, res) {
   });
 };
 
+// // Get a single transaction
+// exports.show = function(req, res) {
+//   Transaction.findById(req.params.id, function (err, transaction) {
+//     if(err) { return handleError(res, err); }
+//     if(!transaction) { return res.status(404).send('Not Found'); }
+//     return res.json(transaction);
+//   });
+// };
+
 // Get a single transaction
 exports.show = function(req, res) {
-  Transaction.findById(req.params.id, function (err, transaction) {
+  Transaction.findOne({ _id: req.params.id, owner: req.params.owner }, function (err, transaction) {
     if(err) { return handleError(res, err); }
     if(!transaction) { return res.status(404).send('Not Found'); }
     return res.json(transaction);
   });
 };
+
 
 // Creates a new transaction in the DB.
 exports.create = function(req, res) {
