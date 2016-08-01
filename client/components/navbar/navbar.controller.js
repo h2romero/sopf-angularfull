@@ -5,7 +5,11 @@ angular.module('sopfApp')
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
-    }];
+    },{
+      'title': 'Transactions',
+      'link': '/transactions'
+    }
+    ];
 
     $scope.isCollapsed = true;
     $scope.isLoggedIn = Auth.isLoggedIn;
