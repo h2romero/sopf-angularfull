@@ -18,7 +18,7 @@
     <td>{{transaction.type}}</td>
     <td>{{transaction.pay | currency}}</td>
     <td>{{transaction.dueDate | date:'M/d/yyyy'}}</td>
-    <td>{{transaction.isPaid}}</td>
+    <td><input type="checkbox" ng-model="transaction.isPaid" onclick="return false;" /></td>
     <!--<td><a ng-href="/#/transaction/{{ transaction._id }}">{{ transaction.title }}</a></td>-->
     <!--<td>{{ transaction.url }}</td>-->
     <td>
