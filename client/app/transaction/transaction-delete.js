@@ -21,6 +21,6 @@ angular.module('sopfApp')
       });
     }
     vm.back = function() {
-      $location.path('/transaction/' + $routeParams.id);
+      $location.path('/transactions');
     }
   });

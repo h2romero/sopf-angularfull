@@ -28,7 +28,7 @@ exports.index = function(req, res) {
 //   });
 // };
 
-// Get a single transaction
+// Get a single transaction by owner
 exports.show = function(req, res) {
   Transaction.findOne({ _id: req.params.id, owner: req.params.owner }, function (err, transaction) {
     if(err) { return handleError(res, err); }
@@ -52,7 +52,8 @@ exports.update = function(req, res) {
   Transaction.findById(req.params.id, function (err, transaction) {
     if (err) { return handleError(res, err); }
     if(!transaction) { return res.status(404).send('Not Found'); }
-    var updated = _.merge(transaction, req.body);
+    // var updated = _.merge(transaction, req.body);
+    var updated = _.extend(transaction, req.body);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.status(200).json(transaction);

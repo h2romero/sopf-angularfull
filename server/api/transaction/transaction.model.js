@@ -3,6 +3,12 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
+var TagSchema = new Schema({
+  name : {
+    type: String
+  }
+});
+
 var TransactionSchema = new Schema({
   //name: String,
   //info: String,
@@ -28,6 +34,15 @@ var TransactionSchema = new Schema({
     type: Boolean,
     required: true,
     default: false
+  },
+  isPosted: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+  tags: {
+    type: [],
+    default: []
   },
   owner: {
     type: Schema.ObjectId,

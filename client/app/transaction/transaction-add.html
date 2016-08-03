@@ -19,6 +19,20 @@
     <label for="isPaid" class="control-label">Is Paid ?</label>
     <input type="checkbox" ng-model="vm.transaction.isPaid" class="form-control" id="isPaid" placeholder="Enter whether it is paid"  style="width: auto;"/>
   </div>
+  <div class="form-group">
+    <label for="isPaid" class="control-label">Is Posted ?</label>
+    <input type="checkbox" ng-model="vm.transaction.isPosted" class="form-control" id="isPosted" placeholder="Enter whether it is posted"  style="width: auto;"/>
+  </div>
+  <div class="form-group">
+    <label for="tags" class="control-label">Tags</label><br>
+    <div class="tag-input-ctn">
+      <div ng-repeat="(key, tag) in vm.transaction.tags" class="input-tag">
+        {{ tag.name }}
+        <div class="delete-tag" ng-click="vm.deleteTag(key)">&times;</div>
+      </div>
+      <input id="tags" class="form-control" type="text" data-tag-input="" ng-model="vm.tagText" ng-style="{width: inputWidth}" new-tag="vm.addTag()" delete-tag="vm.deleteTag()">
+    </div>
+  </div>
   <input type="submit" class="btn btn-primary" ng-click="vm.saveTransaction()" value="Save"/>
 </form>
 <br/>
