@@ -9,6 +9,7 @@ angular.module('sopfApp')
       socket.syncUpdates('transaction', vm.transactions);
     });
 
+    $('td:has(.form-inline.editable-wrap)').css
   vm.saveTransaction = function (transaction) {
     $http.put('/api/transactions/' + transaction._id, transaction).then(function() {
       $location.path('/transactions');
