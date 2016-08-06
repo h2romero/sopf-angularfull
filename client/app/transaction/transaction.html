@@ -16,12 +16,13 @@
   </thead>
   <tbody>
   <tr ng-repeat="transaction in vm.transactions">
-    <td><a ng-href="/#/transaction/{{ transaction._id }}">{{transaction.account}}</a></td>
-    <td>{{transaction.type}}</td>
-    <td>{{transaction.pay | currency}}</td>
-    <td>{{transaction.dueDate | date:'M/d/yyyy'}}</td>
-    <td><input type="checkbox" ng-model="transaction.isPaid" onclick="return false;" /></td>
-    <td><input type="checkbox" ng-model="transaction.isPosted" onclick="return false;" /></td>
+    <td><a ng-href="/#/transaction/{{ transaction._id }}" editable-text="transaction.account" onaftersave="vm.saveTransaction(transaction)">{{transaction.account}}</a></td>
+    <td><span editable-text="transaction.type" onaftersave="vm.saveTransaction(transaction)">{{transaction.type}}</span></td>
+    <td><span editable-text="transaction.pay" onaftersave="vm.saveTransaction(transaction)">{{transaction.pay | currency}}</span></td>
+    <!--<td>{{transaction.dueDate | date:'M/d/yyyy'}}</td>-->
+    <td><a href="#" editable-date="transaction.dueDate" onaftersave="vm.saveTransaction(transaction)" e-datepicker-popup="dd-MMMM-yyyy">{{(transaction.dueDate | date: 'M/dd/yy')  || 'empty'}}</a></td>
+    <td><input type="checkbox" ng-model="transaction.isPaid" ng-change="vm.saveTransaction(transaction)" /></td>
+    <td><input type="checkbox" ng-model="transaction.isPosted" ng-change="vm.saveTransaction(transaction)" /></td>
     <td>
       <div class="tag-input-ctn">
         <div ng-repeat="(key, tag) in transaction.tags" class="input-tag">
