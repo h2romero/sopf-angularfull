@@ -23,17 +23,17 @@
     </a>
   </th>
   <th>
-    <a href="#" ng-click="vm.sortType = 'type'; vm.sortReverse = !vm.sortReverse">
-      Type
-      <span ng-show="vm.sortType == 'type' && !vm.sortReverse" class="fa fa-caret-down"></span>
-      <span ng-show="vm.sortType == 'type' && vm.sortReverse" class="fa fa-caret-up"></span>
+    <a href="#" ng-click="vm.sortType = 'category'; vm.sortReverse = !vm.sortReverse">
+      Category
+      <span ng-show="vm.sortType == 'category' && !vm.sortReverse" class="fa fa-caret-down"></span>
+      <span ng-show="vm.sortType == 'category' && vm.sortReverse" class="fa fa-caret-up"></span>
     </a>
   </th>
   <th>
-    <a href="#" ng-click="vm.sortType = 'pay'; vm.sortReverse = !vm.sortReverse">
-      Pay
-      <span ng-show="vm.sortType == 'pay' && !vm.sortReverse" class="fa fa-caret-down"></span>
-      <span ng-show="vm.sortType == 'pay' && vm.sortReverse" class="fa fa-caret-up"></span>
+    <a href="#" ng-click="vm.sortType = 'amount'; vm.sortReverse = !vm.sortReverse">
+      Amount
+      <span ng-show="vm.sortType == 'amount' && !vm.sortReverse" class="fa fa-caret-down"></span>
+      <span ng-show="vm.sortType == 'amount' && vm.sortReverse" class="fa fa-caret-up"></span>
     </a>
   </th>
   <th>
@@ -69,8 +69,8 @@
   <tbody>
   <tr ng-repeat="transaction in vm.transactions | orderBy:vm.sortType:vm.sortReverse | filter:vm.searchTransaction">
     <td><a ng-href="/#/transaction/{{ transaction._id }}" editable-text="transaction.account" onaftersave="vm.saveTransaction(transaction)">{{transaction.account}}</a></td>
-    <td><span editable-text="transaction.type" onaftersave="vm.saveTransaction(transaction)">{{transaction.type}}</span></td>
-    <td><span editable-number="transaction.pay" e-step="any" onaftersave="vm.saveTransaction(transaction)">{{transaction.pay | currency}}</span></td>
+    <td><span editable-text="transaction.category" onaftersave="vm.saveTransaction(transaction)">{{transaction.category}}</span></td>
+    <td><span editable-number="transaction.amount" e-step="any" onaftersave="vm.saveTransaction(transaction)">{{transaction.amount | currency}}</span></td>
     <!--<td>{{transaction.dueDate | date:'M/d/yyyy'}}</td>-->
     <td><a href="#" editable-date="transaction.dueDate" onaftersave="vm.saveTransaction(transaction)" e-datepicker-popup="M/dd/yy">{{(transaction.dueDate | date: 'M/dd/yy')  || 'empty'}}</a></td>
     <td><input type="checkbox" ng-model="transaction.isPaid" ng-change="vm.saveTransaction(transaction)" /></td>
@@ -79,9 +79,9 @@
       <div class="tag-input-ctn">
         <div ng-repeat="(key, tag) in transaction.tags" class="input-tag">
           {{ tag.name }}
-          <div class="delete-tag" ng-click="vm.deleteTag(key)">&times;</div>
+          <div class="delete-tag" ng-click="vm.deleteTag(key, transaction)">&times;</div>
         </div>
-        <input id="tags" class="form-control" type="text" data-tag-input="" ng-model="vm.tagText" ng-style="{width: inputWidth}" new-tag="vm.addTag()" delete-tag="vm.deleteTag()">
+        <input class="form-control" type="text" data-tag-input="" ng-model="transaction.tagText" ng-style="{width: inputWidth}" new-tag="vm.addTag(transaction)" delete-tag="vm.deleteTag()">
       </div>
     </td>
     <!--<td><a ng-href="/#/transaction/{{ transaction._id }}">{{ transaction.title }}</a></td>-->

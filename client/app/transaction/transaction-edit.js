@@ -35,7 +35,6 @@ angular.module('sopfApp')
       if (vm.tagText == null || vm.tagText.length == 0) {
         return;
       }
-
       vm.transaction.tags.push({name: vm.tagText});
       vm.tagText = '';
     }

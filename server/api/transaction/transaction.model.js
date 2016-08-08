@@ -17,11 +17,11 @@ var TransactionSchema = new Schema({
     type: String,
     required: true
   },
-  type: {
+  category: {
     type: String,
     required: true
   },
-  pay: {
+  amount: {
     type: Number,
     required: true
   },

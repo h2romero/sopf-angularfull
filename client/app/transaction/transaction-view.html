@@ -1,8 +1,8 @@
 <ng-include src="'app/transaction/transaction-nav.html'"></ng-include>
-<h3><b>Account:</b> {{ vm.transaction.account }}</h3>
-<p><b>Payment Type:</b> {{vm.transaction.type}}</p>
-<p><b>Payment Amount:</b> {{vm.transaction.pay | currency}}</p>
-<p><b>Due Date:</b> {{vm.transaction.dueDate | date:'M/d/yyyy'}}</p>
+<h3><b>Account:</b> {{ vm.transaction.account }}</h3><br>
+<p><b>Payment Category:</b> {{vm.transaction.category}}</p><br>
+<p><b>Payment Amount:</b> {{vm.transaction.amount | currency}}</p><br>
+<p><b>Due Date:</b> {{vm.transaction.dueDate | date:'M/d/yyyy'}}</p><br>
 <b>Paid:</b> <input type="checkbox" ng-model="vm.transaction.isPaid" ng-disabled="true" />
 <!--<youtube src="movie.url"></youtube>-->
 <br/>
