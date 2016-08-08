@@ -1,26 +1,78 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <navbar></navbar>
+<form>
+  <div class="form-group">
+    <div class="input-group">
+      <div class="input-group-addon"><i class="fa fa-search"></i></div>
+
+      <input type="text" class="form-control" placeholder="Search Transactions" ng-model="vm.searchTransaction">
+
+    </div>
+  </div>
+</form>
 <a class="btn btn-primary" href="/#/create/transaction"><span class="glyphicon glyphicon-plus"></span> Create Transaction</a>
 <br/>
 <table class="table table-striped">
   <thead>
-  <th>Account</th>
-  <th>Type</th>
-  <th>Pay</th>
-  <th>Due Date</th>
-  <th>Paid</th>
-  <th>Posted</th>
-  <th>Tags</th>
+  <th>
+    <a href="#" ng-click="vm.sortType = 'account'; vm.sortReverse = !vm.sortReverse">
+      Account
+      <span ng-show="vm.sortType == 'account' && !vm.sortReverse" class="fa fa-caret-down"></span>
+      <span ng-show="vm.sortType == 'account' && vm.sortReverse" class="fa fa-caret-up"></span>
+    </a>
+  </th>
+  <th>
+    <a href="#" ng-click="vm.sortType = 'type'; vm.sortReverse = !vm.sortReverse">
+      Type
+      <span ng-show="vm.sortType == 'type' && !vm.sortReverse" class="fa fa-caret-down"></span>
+      <span ng-show="vm.sortType == 'type' && vm.sortReverse" class="fa fa-caret-up"></span>
+    </a>
+  </th>
+  <th>
+    <a href="#" ng-click="vm.sortType = 'pay'; vm.sortReverse = !vm.sortReverse">
+      Pay
+      <span ng-show="vm.sortType == 'pay' && !vm.sortReverse" class="fa fa-caret-down"></span>
+      <span ng-show="vm.sortType == 'pay' && vm.sortReverse" class="fa fa-caret-up"></span>
+    </a>
+  </th>
+  <th>
+    <a href="#" ng-click="vm.sortType = 'dueDate'; vm.sortReverse = !vm.sortReverse">
+      Due Date
+      <span ng-show="vm.sortType == 'dueDate' && !vm.sortReverse" class="fa fa-caret-down"></span>
+      <span ng-show="vm.sortType == 'dueDate' && vm.sortReverse" class="fa fa-caret-up"></span>
+    </a>
+  </th>
+  <th>
+    <a href="#" ng-click="vm.sortType = 'isPaid'; vm.sortReverse = !vm.sortReverse">
+      Paid
+      <span ng-show="vm.sortType == 'isPaid' && !vm.sortReverse" class="fa fa-caret-down"></span>
+      <span ng-show="vm.sortType == 'isPaid' && vm.sortReverse" class="fa fa-caret-up"></span>
+    </a>
+  </th>
+  <th>
+    <a href="#" ng-click="vm.sortType = 'isPosted'; vm.sortReverse = !vm.sortReverse">
+      Posted
+      <span ng-show="vm.sortType == 'isPosted' && !vm.sortReverse" class="fa fa-caret-down"></span>
+      <span ng-show="vm.sortType == 'isPosted' && vm.sortReverse" class="fa fa-caret-up"></span>
+    </a>
+  </th>
+  <th>
+    <a href="#" ng-click="vm.sortType = 'tags'; vm.sortReverse = !vm.sortReverse">
+      Tags
+      <span ng-show="vm.sortType == 'tags' && !vm.sortReverse" class="fa fa-caret-down"></span>
+      <span ng-show="vm.sortType == 'tags' && vm.sortReverse" class="fa fa-caret-up"></span>
+    </a>
+  </th>
   <th>Operations</th>
   </thead>
   <tbody>
-  <tr ng-repeat="transaction in vm.transactions">
+  <tr ng-repeat="transaction in vm.transactions | orderBy:vm.sortType:vm.sortReverse | filter:vm.searchTransaction">
     <td><a ng-href="/#/transaction/{{ transaction._id }}" editable-text="transaction.account" onaftersave="vm.saveTransaction(transaction)">{{transaction.account}}</a></td>
     <td><span editable-text="transaction.type" onaftersave="vm.saveTransaction(transaction)">{{transaction.type}}</span></td>
-    <td><span editable-text="transaction.pay" onaftersave="vm.saveTransaction(transaction)">{{transaction.pay | currency}}</span></td>
+    <td><span editable-number="transaction.pay" e-step="any" onaftersave="vm.saveTransaction(transaction)">{{transaction.pay | currency}}</span></td>
     <!--<td>{{transaction.dueDate | date:'M/d/yyyy'}}</td>-->
-    <td><a href="#" editable-date="transaction.dueDate" onaftersave="vm.saveTransaction(transaction)" e-datepicker-popup="dd-MMMM-yyyy">{{(transaction.dueDate | date: 'M/dd/yy')  || 'empty'}}</a></td>
+    <td><a href="#" editable-date="transaction.dueDate" onaftersave="vm.saveTransaction(transaction)" e-datepicker-popup="M/dd/yy">{{(transaction.dueDate | date: 'M/dd/yy')  || 'empty'}}</a></td>
     <td><input type="checkbox" ng-model="transaction.isPaid" ng-change="vm.saveTransaction(transaction)" /></td>
     <td><input type="checkbox" ng-model="transaction.isPosted" ng-change="vm.saveTransaction(transaction)" /></td>
     <td>

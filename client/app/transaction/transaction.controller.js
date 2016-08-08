@@ -9,12 +9,16 @@ angular.module('sopfApp')
       socket.syncUpdates('transaction', vm.transactions);
     });
 
-    $('td:has(.form-inline.editable-wrap)').css
   vm.saveTransaction = function (transaction) {
     $http.put('/api/transactions/' + transaction._id, transaction).then(function() {
       $location.path('/transactions');
     });
   }
+
+  vm.sortType     = 'account'; // set the default sort type
+  vm.sortReverse  = false;  // set the default sort order
+  vm.searchTransaction   = '';     // set the default search/filter term
+
 
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('transaction');

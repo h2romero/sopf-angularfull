@@ -112,6 +112,11 @@ table.table-striped > tbody > tr > td, table.table-striped > thead > tr > th {
   white-space: nowrap;
 }
 
+table.table-striped th > a {
+  color: #000;
+  text-decoration: none;
+}
+
 
 
 
