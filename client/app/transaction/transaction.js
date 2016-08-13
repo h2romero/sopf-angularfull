@@ -37,5 +37,12 @@ angular.module('sopfApp')
         controller: 'TransactionEditCtrl',
         //controllerAs: 'transactionEdit'
         controllerAs: 'vm'
+      })
+      .state('chartTransaction', {
+        url: '/chart/transaction',
+        templateUrl: 'app/transaction/transaction-chart.html',
+        controller: 'TransactionChartCtrl'
+        //controllerAs: 'transactionEdit'
+        //controllerAs: 'vm'
       });
   });

@@ -7,7 +7,8 @@ angular.module('sopfApp', [
   'btford.socket-io',
   'ui.router',
   'ui.bootstrap',
-  'xeditable'
+  'xeditable',
+  'googlechart'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
@@ -94,3 +95,4 @@ function convertDateStringsToDates(input) {
     }
   }
 }
+
