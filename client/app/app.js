@@ -12,7 +12,7 @@ angular.module('sopfApp', [
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
-      .otherwise('/');
+      .otherwise('/dash/transaction');
 
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');

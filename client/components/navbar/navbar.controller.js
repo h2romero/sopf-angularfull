@@ -7,7 +7,7 @@ angular.module('sopfApp')
       'link': '/'
     },{
       'title': 'Transactions',
-      'link': '/transactions'
+      'link': '/dash/transaction'
     }
     ];
 

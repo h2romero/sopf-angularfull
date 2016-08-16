@@ -1,6 +1,7 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <ul class="nav nav-tabs">
-  <li role="presentation" ng-class="{active: vm.viewTransaction}"><a ng-href="/#/transaction/{{ vm.transaction._id }}">View</a></li>
+  <li role="presentation" ng-class="{active: transactions}"><a ng-href="/#/dash/transaction">Home</a></li>
+  <li role="presentation" ng-class="{active: vm.transactions}"><a ng-href="/#/transactions">Transactions</a></li>
   <li role="presentation" ng-class="{active: vm.editTransaction}"><a ng-href="/#/transaction/{{ vm.transaction._id }}/edit">Edit</a></li>
 </ul>

@@ -38,9 +38,9 @@ angular.module('sopfApp')
         //controllerAs: 'transactionEdit'
         controllerAs: 'vm'
       })
-      .state('chartTransaction', {
-        url: '/chart/transaction',
-        templateUrl: 'app/transaction/transaction-chart.html',
+      .state('dashTransaction', {
+        url: '/dash/transaction',
+        templateUrl: 'app/transaction/transaction-dash.html',
         controller: 'TransactionChartCtrl'
         //controllerAs: 'transactionEdit'
         //controllerAs: 'vm'
