@@ -3,16 +3,17 @@
 angular.module('sopfApp')
   .controller('TransactionCtrl', function ($scope, $http, $stateParams, $location, socket, Auth) {
     var vm = this;
+
     $http.get('/api/transactions/' + Auth.getCurrentUser()._id).success(function(transactions) {
       vm.transactions = transactions;
       socket.syncUpdates('transaction', vm.transactions);
     });
 
-  vm.saveTransaction = function (transaction) {
-    $http.put('/api/transactions/' + transaction._id, transaction).then(function() {
-      $location.path('/transactions');
-    });
-  }
+    vm.saveTransaction = function (transaction) {
+      $http.put('/api/transactions/' + transaction._id, transaction).then(function() {
+        $location.path('/transactions');
+      });
+    }
 
     //vm.transactions.tags = [];
 
@@ -36,9 +37,9 @@ angular.module('sopfApp')
       vm.saveTransaction(transaction);
     }
 
-  vm.sortType     = 'account'; // set the default sort type
-  vm.sortReverse  = false;  // set the default sort order
-  vm.searchTransaction   = '';     // set the default search/filter term
+    vm.sortType     = 'account'; // set the default sort type
+    vm.sortReverse  = false;  // set the default sort order
+    vm.searchTransaction   = '';     // set the default search/filter term
 
 
     $scope.$on('$destroy', function () {

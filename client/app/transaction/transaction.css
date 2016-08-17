@@ -157,6 +157,10 @@ table.table-striped th > a {
   height: 500px;
 }
 
+.nav-tabs {
+  margin-bottom: 10px;
+}
+
 
 
 
