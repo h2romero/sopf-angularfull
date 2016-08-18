@@ -15,7 +15,7 @@ angular.module('sopfApp')
         })
         .then( function() {
           // Logged in, redirect to home
-          $location.path('/');
+          $location.path('/dash/transaction');
         })
         .catch( function(err) {
           $scope.errors.other = err.message;
