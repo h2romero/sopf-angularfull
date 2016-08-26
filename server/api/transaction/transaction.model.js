@@ -46,11 +46,18 @@ var TransactionSchema = new Schema({
   },
   owner: {
     type: Schema.ObjectId,
+    required: true,
     ref: 'User'
   },
   createdAt: {
     type: Date,
+    required: true,
     default: Date.now
+  },
+  period: {
+    type: Schema.ObjectId,
+    required: false,
+    ref: 'Period'
   }
 
 });

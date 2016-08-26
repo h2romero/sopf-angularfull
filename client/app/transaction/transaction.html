@@ -12,7 +12,16 @@
   </div>
 </form>
 <a class="btn btn-primary" href="/#/create/transaction"><span class="glyphicon glyphicon-plus"></span> Create Transaction</a>
-<br/>
+<br/><br>
+
+
+  <label for="repeatSelect"> <h4>Period:&nbsp;</h4> </label>
+
+  <!--<select name="repeatSelect" ng-model="vm.period" ng-options="p.name for p in vm.periods" ng-change="vm.getTransactions()">-->
+    <!--<option ng-repeat="period in vm.periods" ng-value="period._id">{{ period.name }}</option>-->
+  <!--</select>-->
+  <select name="repeatSelect" ng-options="period as period.name for period in vm.periods track by period._id" ng-model="vm.period"  ng-change="vm.getTransactions()"></select>
+
 <table class="table table-striped">
   <thead>
   <th>
@@ -72,7 +81,7 @@
     <td><span editable-text="transaction.category" onaftersave="vm.saveTransaction(transaction)">{{transaction.category}}</span></td>
     <td><span editable-number="transaction.amount" e-step="any" onaftersave="vm.saveTransaction(transaction)">{{transaction.amount | currency}}</span></td>
     <!--<td>{{transaction.dueDate | date:'M/d/yyyy'}}</td>-->
-    <td><a href="#" editable-date="transaction.dueDate" onaftersave="vm.saveTransaction(transaction)" e-datepicker-popup="M/dd/yy">{{(transaction.dueDate | date: 'M/dd/yy')  || 'empty'}}</a></td>
+    <td><a href="#" editable-date="transaction.dueDate" onaftersave="vm.saveTransaction(transaction,vm.period)" e-datepicker-popup="M/dd/yy">{{(transaction.dueDate | date: 'M/dd/yy')  || 'empty'}}</a></td>
     <td><input type="checkbox" ng-model="transaction.isPaid" ng-change="vm.saveTransaction(transaction)" /></td>
     <td><input type="checkbox" ng-model="transaction.isPosted" ng-change="vm.saveTransaction(transaction)" /></td>
     <td>

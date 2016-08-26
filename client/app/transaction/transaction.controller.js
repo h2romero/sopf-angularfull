@@ -1,17 +1,35 @@
 'use strict';
 
 angular.module('sopfApp')
-  .controller('TransactionCtrl', function ($scope, $http, $stateParams, $location, socket, Auth) {
+  .controller('TransactionCtrl', function ($scope, $http, $stateParams, $location, $filter, socket, Auth, sharedProperties) {
     var vm = this;
 
-    $http.get('/api/transactions/' + Auth.getCurrentUser()._id).success(function(transactions) {
-      vm.transactions = transactions;
-      socket.syncUpdates('transaction', vm.transactions);
-    });
+    vm.getPeriods = function () {
+      $http.get('/api/periods/' + Auth.getCurrentUser()._id).success(function(periods) {
+        vm.periods = periods;
+        //vm.period = $filter('filter')(periods, {_id: sharedProperties.getValue('period') }).pop();
+        vm.period = sharedProperties.getValue('period');
+        vm.getTransactions();
+        socket.syncUpdates('period', vm.periods);
+      });
+    }
 
-    vm.saveTransaction = function (transaction) {
+    vm.getTransactions = function () {
+      $http.get('/api/transactions/' + Auth.getCurrentUser()._id + '/' + vm.period._id).success(function(transactions) {
+        vm.transactions = transactions;
+        //sharedProperties.setValue('period', vm.period._id);
+        sharedProperties.setValue('period', vm.period);
+        socket.syncUpdates('transaction', vm.transactions);
+      });
+    }
+
+    vm.getPeriods();
+
+    vm.saveTransaction = function (transaction, period) {
+      transaction.period = period
       $http.put('/api/transactions/' + transaction._id, transaction).then(function() {
-        $location.path('/transactions');
+        vm.load()
+        //$location.path('/transactions');
       });
     }
 

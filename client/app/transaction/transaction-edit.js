@@ -20,14 +20,21 @@ angular.module('sopfApp')
     //    })
     //  }
     //});
-    $http.get('api/transactions/' + Auth.getCurrentUser()._id + '/' + $stateParams.id).success(function(transaction){
-      vm.transaction = transaction;
-      vm.saveTransaction = function () {
-        $http.put('/api/transactions/' + vm.transaction._id, vm.transaction).then(function() {
-          $location.path('/transactions');
-        });
-      }
-    });
+    vm.saveTransaction = function () {
+      vm.transaction.period = vm.period;
+      $http.put('/api/transactions/' + vm.transaction._id, vm.transaction).then(function() {
+        $location.path('/transactions');
+      });
+    }
+
+    vm.getPeriods = function () {
+      $http.get('/api/periods/' + Auth.getCurrentUser()._id).success(function(periods) {
+        vm.periods = periods;
+        socket.syncUpdates('period', vm.periods);
+      });
+    }
+
+    vm.getPeriods();
 
     vm.transaction.tags = [];
 

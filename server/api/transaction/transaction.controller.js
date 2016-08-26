@@ -13,7 +13,7 @@ var Transaction = require('./transaction.model');
 
 // Get list of transactions by owner
 exports.index = function(req, res) {
-  Transaction.find({owner: req.params.owner}, function (err, transactions) {
+  Transaction.find({owner: req.params.owner, period: req.params.period}, function (err, transactions) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(transactions);
   });

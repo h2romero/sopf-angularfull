@@ -1,0 +1,22 @@
+<ng-include src="'app/transaction/transaction-nav.html'"></ng-include>  
+<form role="form">
+  <div class="form-group">
+    <label for="name" class="control-label">Period Name</label>
+    <input type="text" ng-model="vm.period.name" class="form-control" id="name" placeholder="(Example: August 2016)"/>
+  </div>
+  <div class="form-group">
+    <label for="description" class="control-label">Description (Optional)</label>
+    <input type="text" ng-model="vm.period.description" class="form-control" id="description" placeholder="Period Description"/>
+  </div>
+  <input type="submit" class="btn btn-primary" ng-click="vm.savePeriod()" value="Save"/>
+</form>
+<table class="table table-striped"> 
+  <thead> 
+    <th>Periods</th>
+  </thead>
+  <tbody> 
+    <tr ng-repeat="period in vm.periods"> 
+      <td>  {{period.name}} </td>
+    </tr>
+  </tbody>
+</table>
