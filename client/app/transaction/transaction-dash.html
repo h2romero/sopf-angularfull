@@ -1,12 +1,26 @@
 <ng-include src="'app/transaction/transaction-nav.html'"></ng-include>
 
+
 <div id="dashboard">
   <div class="row">
     <div class="col-lg-1"></div>
     <div class="col-lg-2">
-      <div class="jumbotron dash-section text-center" style="background-color: #2f6fad">
-        <h3 style="color: #FFFFFF; background-color: #2f6fad">{{totalAmount | currency}}</h3>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-2">
+      <div class="dash-section">
+        <select name="repeatSelect" ng-options="period as period.name for period in periods track by period._id" ng-model="period"  ng-change="getTransactions()"
+        style="width: 165px;"></select>
+        <div class="jumbotron dash-section text-center" style="background-color: #2f6fad">
+          <h3 style="color: #FFFFFF; background-color: #2f6fad">{{totalAmount | currency}}</h3>
       </div>
+      </div>
+    </div>
+    <div class="col-lg-7>">
+      <div class="dash-section" style="position: relative; float: right; right: 86px;" ng-show="transactions" google-chart chart="piechart"></div>
     </div>
   </div>
   <div class="row">
@@ -18,7 +32,7 @@
   <div class="row">
     <div class="col-lg-1"></div>
     <div class="col-lg-10>">
-      <div class="dash-section chart-section" ng-show="transactions" google-chart chart="piechart"></div>
+
     </div>
   </div>
 </div>

@@ -16,7 +16,7 @@ angular.module('sopfApp')
     });
 
     vm.deleteTransaction = function() {
-      $http.delete('/api/transactions/' + Auth.getCurrentUser()._id + '/' + vm.transaction._id).then(function() {
+      $http.delete('/api/transactions/' + vm.transaction._id).then(function() {
         $location.path('/transactions');
       });
     }

@@ -8,7 +8,7 @@ angular.module('sopfApp')
       $http.get('/api/periods/' + Auth.getCurrentUser()._id).success(function(periods) {
         vm.periods = periods;
         //vm.period = $filter('filter')(periods, {_id: sharedProperties.getValue('period') }).pop();
-        vm.period = sharedProperties.getValue('period');
+        vm.period = !sharedProperties.getValue('period') ? vm.periods[vm.periods.length -1] : sharedProperties.getValue('period');
         vm.getTransactions();
         socket.syncUpdates('period', vm.periods);
       });
@@ -28,7 +28,7 @@ angular.module('sopfApp')
     vm.saveTransaction = function (transaction, period) {
       transaction.period = period
       $http.put('/api/transactions/' + transaction._id, transaction).then(function() {
-        vm.load()
+        vm.getTransactions()
         //$location.path('/transactions');
       });
     }

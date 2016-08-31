@@ -1,14 +1,32 @@
 'use strict';
 
-angular.module('sopfApp').controller("TransactionChartCtrl", function ($scope, $http, Auth) {
-  $scope.totalAmount = 0;
-  $http.get('/api/transactions/' + Auth.getCurrentUser()._id).success(function(transactions) {
-    $scope.transactions = transactions;
-    if ($scope.transactions.length > 0)
-      $scope.getColumnChart();
-      $scope.getPieChart();
+angular.module('sopfApp').controller("TransactionChartCtrl", function ($scope, $http, Auth, sharedProperties, socket) {
 
-  });
+  $scope.totalAmount = 0;
+  $scope.period = sharedProperties.getValue('period');
+
+  $scope.getPeriods = function () {
+    $http.get('/api/periods/' + Auth.getCurrentUser()._id).success(function(periods) {
+      $scope.periods = periods;
+      //vm.period = $filter('filter')(periods, {_id: sharedProperties.getValue('period') }).pop();
+      $scope.period = !sharedProperties.getValue('period') ? $scope.periods[$scope.periods.length -1] : sharedProperties.getValue('period');
+      $scope.getTransactions();
+      socket.syncUpdates('period', $scope.periods);
+    });
+  }
+
+  $scope.getTransactions = function () {
+    $http.get('/api/transactions/' + Auth.getCurrentUser()._id + '/' + $scope.period._id).success(function (transactions) {
+      $scope.transactions = transactions;
+      if ($scope.transactions.length > 0){
+        $scope.getColumnChart();
+        $scope.getPieChart();
+      }
+    });
+  }
+
+  $scope.getPeriods();
+
   $scope.getColumnChart = function () {
     var chart1 = {};
     chart1.type = "ColumnChart";

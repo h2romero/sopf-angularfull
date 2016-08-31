@@ -3,9 +3,7 @@
 <form role="form">
   <div class="form-group">
     <label for="repeatSelect" class="control-label">Period</label>
-    <select name="repeatSelect" ng-model="vm.period" class="form-control">
-      <option ng-repeat="period in vm.periods" ng-value="period._id">{{ period.name }}</option>
-    </select>
+    <select name="repeatSelect" ng-options="period as period.name for period in vm.periods track by period._id" ng-model="vm.period"  ng-change="vm.getTransactions()"></select>
 
   </div>
   <div class="form-group">

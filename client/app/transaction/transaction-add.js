@@ -35,4 +35,24 @@ angular.module('sopfApp')
         $location.path('/transactions');
       });
     }
+
+    vm.transaction.tags = [];
+
+    vm.addTag = function() {
+      if (vm.tagText == null || vm.tagText.length == 0) {
+        return;
+      }
+      vm.transaction.tags.push({name: vm.tagText});
+      vm.tagText = '';
+    }
+
+    vm.deleteTag = function(key) {
+      if (vm.transaction.tags.length > 0 &&
+        (vm.tagText == null || vm.tagText.length == 0) &&
+        key === undefined) {
+        vm.transaction.tags.pop();
+      } else if (key != undefined) {
+        vm.transaction.tags.splice(key, 1);
+      }
+    }
   });
