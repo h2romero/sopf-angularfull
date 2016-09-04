@@ -8,7 +8,8 @@ angular.module('sopfApp', [
   'ui.router',
   'ui.bootstrap',
   'xeditable',
-  'googlechart'
+  'googlechart',
+  'inputDropdown'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider

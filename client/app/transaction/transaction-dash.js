@@ -1,31 +1,51 @@
 'use strict';
 
-angular.module('sopfApp').controller("TransactionChartCtrl", function ($scope, $http, Auth, sharedProperties, socket) {
+angular.module('sopfApp').controller("TransactionDashCtrl", function ($scope, $http, $q, Auth, sharedProperties, socket) {
 
-  $scope.totalAmount = 0;
-  $scope.period = sharedProperties.getValue('period');
+  var vm = this;
+  vm.period = null;
+  //vm.periods = null;
 
-  $scope.getPeriods = function () {
+  vm.totalAmount = 0;
+  vm.dashTransaction = true;
+  vm.periods = sharedProperties.getValue('periods');
+
+  vm.getPeriods = function () {
     $http.get('/api/periods/' + Auth.getCurrentUser()._id).success(function(periods) {
-      $scope.periods = periods;
+      vm.periods = periods;
+      sharedProperties.setValue('periods', periods);
       //vm.period = $filter('filter')(periods, {_id: sharedProperties.getValue('period') }).pop();
-      $scope.period = !sharedProperties.getValue('period') ? $scope.periods[$scope.periods.length -1] : sharedProperties.getValue('period');
-      $scope.getTransactions();
-      socket.syncUpdates('period', $scope.periods);
+      vm.period = !sharedProperties.getValue('period') ? vm.periods[vm.periods.length -1] : sharedProperties.getValue('period');
+      vm.getTransactions(vm.period);
+      socket.syncUpdates('period', vm.periods);
     });
   }
 
-  $scope.getTransactions = function () {
-    $http.get('/api/transactions/' + Auth.getCurrentUser()._id + '/' + $scope.period._id).success(function (transactions) {
-      $scope.transactions = transactions;
-      if ($scope.transactions.length > 0){
+  vm.getTransactions = function (period) {
+    $http.get('/api/transactions/' + Auth.getCurrentUser()._id + '/' + period._id).success(function (transactions) {
+      vm.transactions = transactions;
+      sharedProperties.setValue('period', period);
+      if (vm.transactions.length > 0){
         $scope.getColumnChart();
         $scope.getPieChart();
       }
     });
   }
 
-  $scope.getPeriods();
+  vm.getPeriods();
+
+  vm.filterObjectList = function(userInput) {
+    var filter = $q.defer();
+    var normalisedInput = userInput.toLowerCase();
+
+    var filteredArray = vm.periods.filter(function(period) {
+      var matchPeriodName = period.readableName.toLowerCase().indexOf(normalisedInput) === 0;
+      return matchPeriodName;
+    });
+
+    filter.resolve(filteredArray);
+    return filter.promise;
+  };
 
   $scope.getColumnChart = function () {
     var chart1 = {};
@@ -39,12 +59,13 @@ angular.module('sopfApp').controller("TransactionChartCtrl", function ($scope, $
         {v: 0},
       ]}
     ]};
-    angular.forEach($scope.transactions, function (trans) {
+    vm.totalAmount = 0;
+    angular.forEach(vm.transactions, function (trans) {
       var v1 = {'v' : trans.account};
       var v2 = {'v' : trans.amount};
       var col = {'c' : [v1, v2]};
       chart1.data.rows.push(col);
-      $scope.totalAmount += trans.amount;
+      vm.totalAmount += trans.amount;
     });
     chart1.formatters = {
       number: [{
@@ -64,7 +85,7 @@ angular.module('sopfApp').controller("TransactionChartCtrl", function ($scope, $
     chart1.data = [
       ['Amount', 'Account']
     ];
-    angular.forEach($scope.transactions, function (trans) {
+    angular.forEach(vm.transactions, function (trans) {
       chart1.data.push([trans.account, trans.amount]);
     });
     chart1.options = {

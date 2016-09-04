@@ -3,8 +3,10 @@
 <form role="form">
   <div class="form-group">
     <label for="repeatSelect" class="control-label">Period</label>
-    <select name="repeatSelect" ng-options="period as period.name for period in vm.periods track by period._id" ng-model="vm.period"  ng-change="vm.getTransactions()"></select>
-
+    <input-dropdown selected-item="vm.period" default-dropdown-items="vm.periods" item-selected-method="vm.getTransactions(item)"
+                    input-required="true" filter-list-method="vm.filterObjectList(userInput)" aria-autocomplete="list"
+                    ng-focus="count = count + 1" ></input-dropdown>
+    <h1>{{count}}</h1>
   </div>
   <div class="form-group">
     <label for="account" class="control-label">Account</label>
@@ -43,4 +45,4 @@
   <input type="submit" class="btn btn-primary" ng-click="vm.saveTransaction()" value="Save"/>
 </form>
 <br/>
-<a ng-href="/#/transactions" >&lt;&lt; Transaction List</a>
+<a ng-href="/#/transactions"  class="btn btn-danger">Cancel</a>

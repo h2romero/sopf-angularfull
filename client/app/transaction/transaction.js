@@ -41,8 +41,7 @@ angular.module('sopfApp')
       .state('dashTransaction', {
         url: '/dash/transaction',
         templateUrl: 'app/transaction/transaction-dash.html',
-        controller: 'TransactionChartCtrl'
-        //controllerAs: 'transactionEdit'
-        //controllerAs: 'vm'
+        controller: 'TransactionDashCtrl',
+        controllerAs: 'vm'
       });
   });
