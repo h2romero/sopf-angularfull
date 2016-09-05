@@ -1,0 +1,25 @@
+input-dropdown {
+  border: none;
+}
+.input-dropdown {
+  display: block;
+  width: 98%;
+  height: 34px;
+  padding: 6px 12px;
+  border: none;
+}
+
+.input-dropdown ul {
+  width: 90%;
+  top: 31px;
+  left: 3px;
+}
+.input-dropdown input[type='text'] {
+  padding: 6px;
+  bottom: 7px;
+  right: 13px;
+  position: relative;
+  width: 104%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

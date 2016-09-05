@@ -8,22 +8,35 @@
  * Controller of the clientApp
  */
 angular.module('sopfApp')
-  .controller('TransactionAddCtrl', function ($scope, $http, $location, socket, Auth, sharedProperties) {
+  .controller('TransactionAddCtrl', function ($scope, $http, $location, $timeout, socket, Auth, sharedProperties) {
     var vm = this;
     vm.transaction = {};
+    // vm.periods = null;
+    // vm.period = null;
     vm.transaction.dueDate = Date.now();
     vm.transaction.owner = Auth.getCurrentUser()._id;
-    vm.period = sharedProperties.getValue('period');
+    vm.periods = sharedProperties.getValue('periods');
+    $timeout(function() {
+      vm.period = sharedProperties.getValue('period');
+      if (!vm.period) {
+        vm.periods = [{
+          id: 0,
+          readableName: 'Unnamed Period'
+        }]
+        vm.period = vm.periods[0];
+      }
 
-    vm.getPeriods = function () {
-      $http.get('/api/periods/' + Auth.getCurrentUser()._id).success(function(periods) {
-        vm.periods = periods;
-        // vm.period = sharedProperties.getValue('period');
-        socket.syncUpdates('period', vm.periods);
-      });
-    }
+    }, 10);
 
-    vm.getPeriods();
+    // vm.getPeriods = function () {
+    //   $http.get('/api/periods/' + Auth.getCurrentUser()._id).success(function(periods) {
+    //     vm.periods = periods;
+    //     vm.period = sharedProperties.getValue('period');
+    //     socket.syncUpdates('period', vm.periods);
+    //   });
+    // }
+    //
+    // vm.getPeriods();
 
     vm.saveTransaction = function() {
       //Transaction.post(vm.transaction).then(function() {

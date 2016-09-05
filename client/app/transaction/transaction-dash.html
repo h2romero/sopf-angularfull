@@ -15,13 +15,16 @@
         <!--<select name="repeatSelect" ng-options="period as period.name for period in periods track by period._id" ng-model="period"  ng-change="getTransactions()"-->
         <!--style="width: 165px;"></select>-->
         <input-dropdown selected-item="vm.period" default-dropdown-items="vm.periods" item-selected-method="vm.getTransactions(item)"
-                        input-required="true" filter-list-method="vm.filterObjectList(userInput)" aria-autocomplete="list" style="width: 165px;"></input-dropdown>
+                        input-required="true" filter-list-method="vm.filterObjectList(userInput)" aria-autocomplete="list" style="width: 165px;"
+        ng-show="vm.period"></input-dropdown>
         <div class="jumbotron dash-section text-center" style="background-color: #2f6fad">
           <h3 style="color: #FFFFFF; background-color: #2f6fad">{{vm.totalAmount | currency}}</h3>
+          <div><h4 style="color: #FFFFFF; margin-bottom: 4px;">Total Transactions This Period</h4> &nbsp;</div>
       </div>
       </div>
     </div>
     <div class="col-lg-7>">
+      <a href="/#/create/transaction" style="margin-left: 25px; line-height: 15;" ng-show="!vm.transactions">You have no transactions. Enter one to get started</a>
       <div class="dash-section" style="position: relative; float: right; right: 86px;" ng-show="vm.transactions" google-chart chart="piechart"></div>
     </div>
   </div>
