@@ -17,7 +17,6 @@
   </thead>
   <tbody> 
     <tr ng-repeat="period in vm.periods"> 
-      <!--<td>  {{period.readableName}} </td>-->
       <td><span editable-text="period.readableName" onaftersave="vm.updatePeriod(period)">{{period.readableName}}</span></td>
       <td><span editable-text="period.description" onaftersave="vm.updatePeriod(period)">{{period.description}}</span></td>
     </tr>
