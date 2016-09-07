@@ -20,33 +20,33 @@ angular.module('sopfApp')
       vm.period = sharedProperties.getValue('period');
       if (!vm.period) {
         vm.periods = [{
-          id: 0,
-          readableName: 'Unnamed Period'
+          readableName: 'Unnamed Period',
+          description: 'N/A'
         }]
         vm.period = vm.periods[0];
       }
 
     }, 10);
 
-    // vm.getPeriods = function () {
-    //   $http.get('/api/periods/' + Auth.getCurrentUser()._id).success(function(periods) {
-    //     vm.periods = periods;
-    //     vm.period = sharedProperties.getValue('period');
-    //     socket.syncUpdates('period', vm.periods);
-    //   });
-    // }
-    //
-    // vm.getPeriods();
+    vm.savePeriod = function() {
+      if (!vm.period._id){
+        vm.period.owner = Auth.getCurrentUser()._id;
+        $http.post('api/periods', vm.period).then(function(res) {
+          vm.period = res.data;
+        });
+      }
+    }
 
     vm.saveTransaction = function() {
-      //Transaction.post(vm.transaction).then(function() {
-      //  $location.path('/transactions');
-      //});
-      vm.transaction.period = vm.period;
-      $http.post('api/transactions', vm.transaction).then(function() {
-        sharedProperties.setValue('period', vm.period);
-        $location.path('/transactions');
-      });
+      vm.savePeriod();
+      $timeout(function() {
+        vm.transaction.period = vm.period._id;
+        $http.post('api/transactions', vm.transaction).then(function() {
+          sharedProperties.setValue('period', vm.period);
+          $location.path('/transactions');
+        });
+      }, 1000);
+
     }
 
     vm.transaction.tags = [];

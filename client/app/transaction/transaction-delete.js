@@ -11,7 +11,7 @@ angular.module('sopfApp')
   .controller('TransactionDeleteCtrl', function ($http, $stateParams, $location, Auth) {
     var vm = this;
     //vm.transaction = Transaction.one($routeParams.id).get().$object;
-    $http.get('api/transactions/' + Auth.getCurrentUser()._id + '/' + $stateParams.id).success(function(transaction){
+    $http.get('api/transactions/' + $stateParams.id).success(function(transaction){
       vm.transaction = transaction;
     });
 

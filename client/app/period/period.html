@@ -5,7 +5,7 @@
     <input type="text" ng-model="vm.period.readableName" class="form-control" id="name" placeholder="Enter a Period Name"/>
   </div>
   <div class="form-group">
-    <label for="description" class="control-label">Description (Optional)</label>
+    <label for="description" class="control-label">Description</label>
     <input type="text" ng-model="vm.period.description" class="form-control" id="description" placeholder="Enter a Period Description"/>
   </div>
   <input type="submit" class="btn btn-primary" ng-click="vm.savePeriod()" value="Save"/>
@@ -13,10 +13,13 @@
 <table class="table table-striped"> 
   <thead> 
     <th>Periods</th>
+    <th>Description</th>
   </thead>
   <tbody> 
     <tr ng-repeat="period in vm.periods"> 
-      <td>  {{period.readableName}} </td>
+      <!--<td>  {{period.readableName}} </td>-->
+      <td><span editable-text="period.readableName" onaftersave="vm.updatePeriod(period)">{{period.readableName}}</span></td>
+      <td><span editable-text="period.description" onaftersave="vm.updatePeriod(period)">{{period.description}}</span></td>
     </tr>
   </tbody>
 </table>

@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var PeriodSchema = new Schema({
-  name: {
+  readableName: {
     type: String,
     required: true
   },

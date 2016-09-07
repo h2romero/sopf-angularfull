@@ -56,7 +56,7 @@ var TransactionSchema = new Schema({
   },
   period: {
     type: Schema.ObjectId,
-    required: false,
+    required: true,
     ref: 'Period'
   }
 

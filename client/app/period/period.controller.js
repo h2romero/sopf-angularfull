@@ -5,8 +5,15 @@ angular.module('sopfApp')
     var vm = this;
     vm.period = {};
     vm.period.owner = Auth.getCurrentUser()._id;
+
     vm.savePeriod = function() {
       $http.post('api/periods', vm.period).then(function() {
+        $location.path('/periods');
+      });
+    }
+
+    vm.updatePeriod = function(period) {
+      $http.put('api/periods/' + period._id, period).then(function() {
         $location.path('/periods');
       });
     }
