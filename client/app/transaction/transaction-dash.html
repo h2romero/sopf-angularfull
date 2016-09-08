@@ -3,14 +3,29 @@
 
 <div id="dashboard">
   <div class="row">
+    <div class="row">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-2">
+            &nbsp;
+      </div>
+    </div>
     <div class="col-lg-1"></div>
-    <div class="col-lg-2">
+    <div class="col-lg-4">
+      <form>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon"><i class="fa fa-search"></i></div>
 
+            <input type="text" class="form-control" placeholder="Search Transactions" ng-model="vm.searchTransaction" ng-change="vm.search()">
+
+          </div>
+        </div>
+      </form>
     </div>
   </div>
   <div class="row">
     <div class="col-lg-1"></div>
-    <div class="col-lg-2">
+    <div class="col-lg-4">
       <div class="dash-section">
         <!--<select name="repeatSelect" ng-options="period as period.name for period in periods track by period._id" ng-model="period"  ng-change="getTransactions()"-->
         <!--style="width: 165px;"></select>-->

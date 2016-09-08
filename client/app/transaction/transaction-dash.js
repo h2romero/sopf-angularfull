@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('sopfApp').controller("TransactionDashCtrl", function ($scope, $http, $q, Auth, sharedProperties, socket) {
+angular.module('sopfApp').controller("TransactionDashCtrl", function ($scope, $http, $q, $filter, $timeout, Auth, sharedProperties, socket) {
 
   var vm = this;
   vm.period = null;
@@ -24,15 +24,32 @@ angular.module('sopfApp').controller("TransactionDashCtrl", function ($scope, $h
   vm.getTransactions = function (period) {
     $http.get('/api/transactions/' + Auth.getCurrentUser()._id + '/' + period._id).success(function (transactions) {
       vm.transactions = transactions;
+      vm.transactions2 = vm.transactions;
       sharedProperties.setValue('period', period);
       if (vm.transactions.length > 0){
-        $scope.getColumnChart();
-        $scope.getPieChart();
+        $scope.getColumnChart(vm.transactions);
+        $scope.getPieChart(vm.transactions);
       }
     });
   }
 
   vm.getPeriods();
+
+
+  vm.search = function () {
+    vm.transactions = $filter('filter')(vm.transactions2, vm.searchTransaction);
+    $timeout(function(){
+      if (vm.transactions.length > 0){
+        $scope.getColumnChart(vm.transactions);
+      }
+    }, 50);
+
+    $timeout(function(){
+      if (vm.transactions.length > 0){
+        $scope.getPieChart(vm.transactions);
+      }
+    }, 100);
+  }
 
   vm.filterObjectList = function(userInput) {
     var filter = $q.defer();
@@ -47,7 +64,7 @@ angular.module('sopfApp').controller("TransactionDashCtrl", function ($scope, $h
     return filter.promise;
   };
 
-  $scope.getColumnChart = function () {
+  $scope.getColumnChart = function (transactions) {
     var chart1 = {};
     chart1.type = "ColumnChart";
     chart1.data = {"cols": [
@@ -60,7 +77,7 @@ angular.module('sopfApp').controller("TransactionDashCtrl", function ($scope, $h
       ]}
     ]};
     vm.totalAmount = 0;
-    angular.forEach(vm.transactions, function (trans) {
+    angular.forEach(transactions, function (trans) {
       var v1 = {'v' : trans.account};
       var v2 = {'v' : trans.amount};
       var col = {'c' : [v1, v2]};
@@ -79,13 +96,13 @@ angular.module('sopfApp').controller("TransactionDashCtrl", function ($scope, $h
     };
   }
 
-  $scope.getPieChart = function () {
+  $scope.getPieChart = function (transactions) {
     var chart1 = {};
     chart1.type = "PieChart";
     chart1.data = [
       ['Amount', 'Account']
     ];
-    angular.forEach(vm.transactions, function (trans) {
+    angular.forEach(transactions, function (trans) {
       chart1.data.push([trans.account, trans.amount]);
     });
     chart1.options = {
