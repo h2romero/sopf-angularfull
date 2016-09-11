@@ -4,5 +4,5 @@
   <li role="presentation" ng-class="{active: vm.dashTransaction}"><a ng-href="/#/dash/transaction">Dashboard</a></li>
   <li role="presentation" ng-class="{active: vm.transactionTransaction}"><a ng-href="/#/transactions">Transactions</a></li>
   <li role="presentation" ng-class="{active: vm.editTransaction}" ng-show="vm.editTransaction"><a ng-href="/#/transaction/{{ vm.transaction._id }}/edit">Edit</a></li>
-  <li role="presentation" ng-class="{active: false }"><a ng-href="/#/periods">Periods</a></li>
+  <li role="presentation" ng-class="{active: vm.periodTab }"><a ng-href="/#/periods">Periods</a></li>
 </ul>

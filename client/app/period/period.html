@@ -1,24 +1,30 @@
 <ng-include src="'app/transaction/transaction-nav.html'"></ng-include>  
-<form role="form">
-  <div class="form-group">
-    <label for="name" class="control-label">Period Name</label>
-    <input type="text" ng-model="vm.period.readableName" class="form-control" id="name" placeholder="Enter a Period Name"/>
-  </div>
-  <div class="form-group">
-    <label for="description" class="control-label">Description</label>
-    <input type="text" ng-model="vm.period.description" class="form-control" id="description" placeholder="Enter a Period Description"/>
-  </div>
-  <input type="submit" class="btn btn-primary" ng-click="vm.savePeriod()" value="Save"/>
-</form>
-<table class="table table-striped"> 
-  <thead> 
+<div class="container tab-page" style="position: relative; bottom: 17px;">
+  <form>
+    <div class="form-group">
+      <label for="name" class="control-label">Period Name</label>
+      <input type="text" ng-model="vm.period.readableName" class="form-control" id="name"
+             placeholder="Enter a Period Name"/>
+    </div>
+    <div class="form-group">
+      <label for="description" class="control-label">Description</label>
+      <input type="text" ng-model="vm.period.description" class="form-control" id="description"
+             placeholder="Enter a Period Description"/>
+    </div>
+    <input type="submit" class="btn btn-primary" ng-click="vm.savePeriod()" value="Save"/>
+  </form>
+  <table class="table table-striped"> 
+    <thead> 
     <th>Periods</th>
     <th>Description</th>
-  </thead>
-  <tbody> 
+    </thead>
+    <tbody> 
     <tr ng-repeat="period in vm.periods"> 
-      <td><span editable-text="period.readableName" onaftersave="vm.updatePeriod(period)">{{period.readableName}}</span></td>
-      <td><span editable-text="period.description" onaftersave="vm.updatePeriod(period)">{{period.description}}</span></td>
+      <td><span editable-text="period.readableName" onaftersave="vm.updatePeriod(period)">{{period.readableName}}</span>
+      </td>
+      <td><span editable-text="period.description" onaftersave="vm.updatePeriod(period)">{{period.description}}</span>
+      </td>
     </tr>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>

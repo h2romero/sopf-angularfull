@@ -1,110 +1,123 @@
 <ng-include src="'app/transaction/transaction-nav.html'"></ng-include>
+<div class="container tab-page">
+  <form>
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
 
-<navbar></navbar>
-<form>
-  <div class="form-group">
-    <div class="input-group">
-      <div class="input-group-addon"><i class="fa fa-search"></i></div>
+        <input type="text" class="form-control" placeholder="Search Transactions" ng-model="vm.searchTransaction">
 
-      <input type="text" class="form-control" placeholder="Search Transactions" ng-model="vm.searchTransaction">
-
+      </div>
     </div>
-  </div>
-</form>
-<a class="btn btn-primary" href="/#/create/transaction"><span class="glyphicon glyphicon-plus"></span> Create Transaction</a>
-<br/><br>
+  </form>
+  <a class="btn btn-primary" href="/#/create/transaction"><span class="glyphicon glyphicon-plus"></span> Create
+    Transaction</a>
+  <br/><br>
 
 
-  <label for="repeatSelect"> <h4>Period&nbsp;</h4> </label><br>
+  <label for="repeatSelect"><h4>Period&nbsp;</h4></label><br>
 
   <!--<select name="repeatSelect" ng-model="vm.period" ng-options="p.name for p in vm.periods" ng-change="vm.getTransactions()">-->
-    <!--<option ng-repeat="period in vm.periods" ng-value="period._id">{{ period.name }}</option>-->
+  <!--<option ng-repeat="period in vm.periods" ng-value="period._id">{{ period.name }}</option>-->
   <!--</select>-->
 
   <!--<select name="repeatSelect" ng-options="period as period.name for period in vm.periods track by period._id" ng-model="vm.period"  ng-change="vm.getTransactions()"></select>-->
 
-  <input-dropdown selected-item="vm.period" default-dropdown-items="vm.periods" item-selected-method="vm.getTransactions(item)"
-                  input-required="true" filter-list-method="vm.filterObjectList(userInput)" aria-autocomplete="list" ></input-dropdown>
+  <input-dropdown selected-item="vm.period" default-dropdown-items="vm.periods"
+                  item-selected-method="vm.getTransactions(item)"
+                  input-required="true" filter-list-method="vm.filterObjectList(userInput)"
+                  aria-autocomplete="list"></input-dropdown>
 
-<table class="table table-striped">
-  <thead>
-  <th>
-    <a href="#" ng-click="vm.sortType = 'account'; vm.sortReverse = !vm.sortReverse">
-      Account
-      <span ng-show="vm.sortType == 'account' && !vm.sortReverse" class="fa fa-caret-down"></span>
-      <span ng-show="vm.sortType == 'account' && vm.sortReverse" class="fa fa-caret-up"></span>
-    </a>
-  </th>
-  <th>
-    <a href="#" ng-click="vm.sortType = 'category'; vm.sortReverse = !vm.sortReverse">
-      Category
-      <span ng-show="vm.sortType == 'category' && !vm.sortReverse" class="fa fa-caret-down"></span>
-      <span ng-show="vm.sortType == 'category' && vm.sortReverse" class="fa fa-caret-up"></span>
-    </a>
-  </th>
-  <th>
-    <a href="#" ng-click="vm.sortType = 'amount'; vm.sortReverse = !vm.sortReverse">
-      Amount
-      <span ng-show="vm.sortType == 'amount' && !vm.sortReverse" class="fa fa-caret-down"></span>
-      <span ng-show="vm.sortType == 'amount' && vm.sortReverse" class="fa fa-caret-up"></span>
-    </a>
-  </th>
-  <th>
-    <a href="#" ng-click="vm.sortType = 'dueDate'; vm.sortReverse = !vm.sortReverse">
-      Due Date
-      <span ng-show="vm.sortType == 'dueDate' && !vm.sortReverse" class="fa fa-caret-down"></span>
-      <span ng-show="vm.sortType == 'dueDate' && vm.sortReverse" class="fa fa-caret-up"></span>
-    </a>
-  </th>
-  <th>
-    <a href="#" ng-click="vm.sortType = 'isPaid'; vm.sortReverse = !vm.sortReverse">
-      Paid
-      <span ng-show="vm.sortType == 'isPaid' && !vm.sortReverse" class="fa fa-caret-down"></span>
-      <span ng-show="vm.sortType == 'isPaid' && vm.sortReverse" class="fa fa-caret-up"></span>
-    </a>
-  </th>
-  <th>
-    <a href="#" ng-click="vm.sortType = 'isPosted'; vm.sortReverse = !vm.sortReverse">
-      Posted
-      <span ng-show="vm.sortType == 'isPosted' && !vm.sortReverse" class="fa fa-caret-down"></span>
-      <span ng-show="vm.sortType == 'isPosted' && vm.sortReverse" class="fa fa-caret-up"></span>
-    </a>
-  </th>
-  <th>
-    <a href="#" ng-click="vm.sortType = 'tags'; vm.sortReverse = !vm.sortReverse">
-      Tags
-      <span ng-show="vm.sortType == 'tags' && !vm.sortReverse" class="fa fa-caret-down"></span>
-      <span ng-show="vm.sortType == 'tags' && vm.sortReverse" class="fa fa-caret-up"></span>
-    </a>
-  </th>
-  <th>Operations</th>
-  </thead>
-  <tbody>
-  <tr ng-repeat="transaction in vm.transactions | orderBy:vm.sortType:vm.sortReverse | filter:vm.searchTransaction">
-    <td><a ng-href="/#/transaction/{{ transaction._id }}" editable-text="transaction.account" onaftersave="vm.saveTransaction(transaction,vm.period)">{{transaction.account}}</a></td>
-    <td><span editable-text="transaction.category" onaftersave="vm.saveTransaction(transaction,vm.period)">{{transaction.category}}</span></td>
-    <td><span editable-number="transaction.amount" e-step="any" onaftersave="vm.saveTransaction(transaction,vm.period)">{{transaction.amount | currency}}</span></td>
-    <!--<td>{{transaction.dueDate | date:'M/d/yyyy'}}</td>-->
-    <td><a href="#" editable-date="transaction.dueDate" onaftersave="vm.saveTransaction(transaction,vm.period)" e-datepicker-popup="M/dd/yy">{{(transaction.dueDate | date: 'M/dd/yy')  || 'empty'}}</a></td>
-    <td><input type="checkbox" ng-model="transaction.isPaid" ng-change="vm.saveTransaction(transaction,vm.period)" /></td>
-    <td><input type="checkbox" ng-model="transaction.isPosted" ng-change="vm.saveTransaction(transaction,vm.period)" /></td>
-    <td>
-      <div class="tag-input-ctn">
-        <div ng-repeat="(key, tag) in transaction.tags" class="input-tag">
-          {{ tag.name }}
-          <div class="delete-tag" ng-click="vm.deleteTag(key, transaction, vm.period)">&times;</div>
+  <table class="table table-striped">
+    <thead>
+    <th>
+      <a href="#" ng-click="vm.sortType = 'account'; vm.sortReverse = !vm.sortReverse">
+        Account
+        <span ng-show="vm.sortType == 'account' && !vm.sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="vm.sortType == 'account' && vm.sortReverse" class="fa fa-caret-up"></span>
+      </a>
+    </th>
+    <th>
+      <a href="#" ng-click="vm.sortType = 'category'; vm.sortReverse = !vm.sortReverse">
+        Category
+        <span ng-show="vm.sortType == 'category' && !vm.sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="vm.sortType == 'category' && vm.sortReverse" class="fa fa-caret-up"></span>
+      </a>
+    </th>
+    <th>
+      <a href="#" ng-click="vm.sortType = 'amount'; vm.sortReverse = !vm.sortReverse">
+        Amount
+        <span ng-show="vm.sortType == 'amount' && !vm.sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="vm.sortType == 'amount' && vm.sortReverse" class="fa fa-caret-up"></span>
+      </a>
+    </th>
+    <th>
+      <a href="#" ng-click="vm.sortType = 'dueDate'; vm.sortReverse = !vm.sortReverse">
+        Due Date
+        <span ng-show="vm.sortType == 'dueDate' && !vm.sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="vm.sortType == 'dueDate' && vm.sortReverse" class="fa fa-caret-up"></span>
+      </a>
+    </th>
+    <th>
+      <a href="#" ng-click="vm.sortType = 'isPaid'; vm.sortReverse = !vm.sortReverse">
+        Paid
+        <span ng-show="vm.sortType == 'isPaid' && !vm.sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="vm.sortType == 'isPaid' && vm.sortReverse" class="fa fa-caret-up"></span>
+      </a>
+    </th>
+    <th>
+      <a href="#" ng-click="vm.sortType = 'isPosted'; vm.sortReverse = !vm.sortReverse">
+        Posted
+        <span ng-show="vm.sortType == 'isPosted' && !vm.sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="vm.sortType == 'isPosted' && vm.sortReverse" class="fa fa-caret-up"></span>
+      </a>
+    </th>
+    <th>
+      <a href="#" ng-click="vm.sortType = 'tags'; vm.sortReverse = !vm.sortReverse">
+        Tags
+        <span ng-show="vm.sortType == 'tags' && !vm.sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="vm.sortType == 'tags' && vm.sortReverse" class="fa fa-caret-up"></span>
+      </a>
+    </th>
+    <th>Operations</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="transaction in vm.transactions | orderBy:vm.sortType:vm.sortReverse | filter:vm.searchTransaction">
+      <td><a ng-href="/#/transaction/{{ transaction._id }}" editable-text="transaction.account"
+             onaftersave="vm.saveTransaction(transaction,vm.period)">{{transaction.account}}</a></td>
+      <td><span editable-text="transaction.category" onaftersave="vm.saveTransaction(transaction,vm.period)">{{transaction.category}}</span>
+      </td>
+      <td><span editable-number="transaction.amount" e-step="any"
+                onaftersave="vm.saveTransaction(transaction,vm.period)">{{transaction.amount | currency}}</span></td>
+      <!--<td>{{transaction.dueDate | date:'M/d/yyyy'}}</td>-->
+      <td><a href="#" editable-date="transaction.dueDate" onaftersave="vm.saveTransaction(transaction,vm.period)"
+             e-datepicker-popup="M/dd/yy">{{(transaction.dueDate | date: 'M/dd/yy') || 'empty'}}</a></td>
+      <td><input type="checkbox" ng-model="transaction.isPaid" ng-change="vm.saveTransaction(transaction,vm.period)"/>
+      </td>
+      <td><input type="checkbox" ng-model="transaction.isPosted" ng-change="vm.saveTransaction(transaction,vm.period)"/>
+      </td>
+      <td>
+        <div class="tag-input-ctn">
+          <div ng-repeat="(key, tag) in transaction.tags" class="input-tag">
+            {{ tag.name }}
+            <div class="delete-tag" ng-click="vm.deleteTag(key, transaction, vm.period)">&times;</div>
+          </div>
+          <input class="form-control" type="text" data-tag-input="" ng-model="transaction.tagText"
+                 ng-style="{width: inputWidth}" new-tag="vm.addTag(transaction, vm.period)"
+                 delete-tag="vm.deleteTag(transaction, vm.period)">
         </div>
-        <input class="form-control" type="text" data-tag-input="" ng-model="transaction.tagText" ng-style="{width: inputWidth}" new-tag="vm.addTag(transaction, vm.period)" delete-tag="vm.deleteTag(transaction, vm.period)">
-      </div>
-    </td>
-    <!--<td><a ng-href="/#/transaction/{{ transaction._id }}">{{ transaction.title }}</a></td>-->
-    <!--<td>{{ transaction.url }}</td>-->
-    <td>
-      <div class="button-group">
-        <a ng-href="/#/transaction/{{ transaction._id }}/edit" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span></a>
-        <a ng-href="/#/transaction/{{ transaction._id }}/delete" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle"></span></a>
-      </div>
-    </td>
-  </tr>
-  </tbody>
-</table>
+      </td>
+      <!--<td><a ng-href="/#/transaction/{{ transaction._id }}">{{ transaction.title }}</a></td>-->
+      <!--<td>{{ transaction.url }}</td>-->
+      <td>
+        <div class="button-group">
+          <a ng-href="/#/transaction/{{ transaction._id }}/edit" class="btn btn-default"><span
+            class="glyphicon glyphicon-edit"></span></a>
+          <a ng-href="/#/transaction/{{ transaction._id }}/delete" class="btn btn-danger"><span
+            class="glyphicon glyphicon-remove-circle"></span></a>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
