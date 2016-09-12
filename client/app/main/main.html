@@ -2,94 +2,90 @@
   <div ng-include="'components/navbar/navbar-absolute.html'"></div>
 
   <!-- From Simple Online Personal Finance -->
-  <!-- Carousel
-  ================================================== -->
+  <!-- Carousel  -->
   <div class="main-header">
-    <div id="myCarousel" class="main-header-helper carousel slide" >
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-      <li data-target="#myCarousel" data-slide-to="1"></li>
-      <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
-    <div class="carousel-inner">
-      <div class="item">
-        <!--<img src="/img/bg_suburb.jpg" class="img-responsive">-->
-        <img src="assets/images/calcandpen.jpg" class="img-responsive" />
-        <div class="container">
-          <div class="carousel-caption">
-            <h1>Secure Access</h1>
-            <pthis is="" an="" example="" layout="" with="" carousel="" that="" uses="" the="" bootstrap="" 3="" styles.
-            <="" small=""><p></p>
-            <p>
-              <a class="btn btn-lg btn-primary" href="http://getbootstrap.com">Learn More</a>
-            </p>
-            </pthis>
+    <div id="myCarousel" class="main-header-helper carousel slide">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="item">
+          <!--<img src="/img/bg_suburb.jpg" class="img-responsive">-->
+          <img src="assets/images/calcandpen.jpg" class="img-responsive"/>
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Secure Access</h1>
+              <p>this is="" an="" example="" layout="" with="" carousel="" that="" uses="" the="" bootstrap="" 3=""
+              <p>
+                <a class="btn btn-lg btn-primary" href="http://getbootstrap.com">Learn More</a>
+              </p>
+              </pthis>
+            </div>
+          </div>
+        </div>
+        <div class="item active">
+          <!--<img src="http://lorempixel.com/1500/600/abstract/1" class="img-responsive">-->
+          <img src="assets/images/highabove.jpg" class="img-responsive"/>
+          <div class="container" ng-show="!getLogStatus()">
+            <div class="carousel-caption">
+              <h1>Easy way to keep track of your finances</h1>
+              <p>See all your transactions anonymously and securely</p>
+              <p><a class="btn btn-large btn-primary" href="#">Learn more</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="assets/images/worldata.jpg" class="img-responsive"/>
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Percentage-based sizing</h1>
+              <p>With "mobile-first" there is now only one percentage-based grid.</p>
+              <p><a class="btn btn-large btn-primary" href="#">Browse gallery</a></p>
+            </div>
           </div>
         </div>
       </div>
-      <div class="item active">
-        <!--<img src="http://lorempixel.com/1500/600/abstract/1" class="img-responsive">-->
-        <img src="assets/images/highabove.jpg" class="img-responsive"/>
-        <div class="container" ng-show="!getLogStatus()">
-          <div class="carousel-caption">
-            <h1>Easy way to keep track of your finances</h1>
-            <p>See all your transactions anonymously and securely</p>
-            <p><a class="btn btn-large btn-primary" href="#">Learn more</a></p>
-          </div>
-        </div>
-      </div>
-      <div class="item">
-        <img src="assets/images/worldata.jpg" class="img-responsive" />
-        <div class="container">
-          <div class="carousel-caption">
-            <h1>Percentage-based sizing</h1>
-            <p>With "mobile-first" there is now only one percentage-based grid.</p>
-            <p><a class="btn btn-large btn-primary" href="#">Browse gallery</a></p>
-          </div>
-        </div>
-      </div>
+      <!-- Controls -->
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+        <span class="icon-prev"></span>
+      </a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next">
+        <span class="icon-next"></span>
+      </a>
     </div>
-    <!-- Controls -->
-    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-      <span class="icon-prev"></span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" data-slide="next">
-      <span class="icon-next"></span>
-    </a>
   </div>
-  </div>
-  <!-- /.carousel -->
 
-  <!-- Marketing messaging and featurettes
-  ================================================== -->
+  <!-- Marketing messaging and featurettes -->
   <!-- Wrap the rest of the page in another container to center all the content. -->
   <div ng-show="!getLogStatus()" class="container marketing">
     <!-- Three columns of text below the carousel -->
     <div class="row">
       <div class="col-md-4 text-center">
-        <img class="img-circle" src="assets/images/dollarsign.jpg" />
+        <img class="img-circle" src="assets/images/dollarsign.jpg"/>
         <h2>Know where your money is</h2>
         <p>Secure information everywhere you go. On your phone, tablet, or PC</p>
         <p><a class="btn btn-default" href="#">View details »</a></p>
       </div>
       <div class="col-md-4 text-center">
-        <img class="img-circle" src="assets/images/finance.jpg" />
+        <img class="img-circle" src="assets/images/finance.jpg"/>
         <h2>All your transactions at a glance</h2>
         <p>Easy to upload and manage transactions</p>
         <p><a class="btn btn-default" href="#">View details »</a></p>
       </div>
       <div class="col-md-4 text-center">
-        <img class="img-circle" src="assets/images/upwardgraph.jpg" />
+        <img class="img-circle" src="assets/images/upwardgraph.jpg"/>
         <h2>Stay on top of trends</h2>
         <p>Graphs and lists help to see how your money is trending</p>
         <p><a class="btn btn-default" href="#">View details »</a></p>
       </div>
-    </div><!-- /.row -->
+    </div>
     <!-- START THE FEATURETTES -->
     <hr class="featurette-divider">
     <div class="featurette">
-      <img class="featurette-image img-circle pull-right" src="assets/images/moneysphere.jpg" />
+      <img class="featurette-image img-circle pull-right" src="assets/images/moneysphere.jpg"/>
       <h2 class="featurette-heading">Dream Big <span class="text-muted">The world is yours</span></h2>
       <p class="lead">Managing your money will help you get a hold of your feature. It is easy with the right tools.</p>
     </div>
@@ -97,8 +93,8 @@
 
     <footer>
       <p class="pull-right"><a href="#">Back to top</a></p>
-      <p>&copy; Copyright 2014 <!--<a href="http://www.bootply.com/62603">Edit on Bootply.com</a></p>-->
+      <p>&copy; Copyright 2014 </p>
     </footer>
-  </div><!-- /.container -->
+  </div>
 </div>
 
