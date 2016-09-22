@@ -10,8 +10,19 @@
       </div>
     </div>
   </form>
-  <a class="btn btn-primary" href="/#/create/transaction"><span class="glyphicon glyphicon-plus"></span> Create
-    Transaction</a>
+  <form>
+    <table style="width: 100%;">
+      <tr>
+        <td>
+          <a class="btn btn-primary" href="/#/create/transaction"><span class="glyphicon glyphicon-plus"></span> Create
+            Transaction</a>
+        </td>
+        <td>
+          <input type="submit" class="btn btn-danger" ng-click="vm.clonePeriod()" value="Clone This Period"/>
+        </td>
+      </tr>
+    </table>
+  </form>
   <br/><br>
 
 

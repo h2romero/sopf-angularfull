@@ -81,4 +81,12 @@ angular.module('sopfApp')
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('transaction');
     });
+
+    vm.clonePeriod = function () {
+      $http.get('/api/transactions/clone/period/' + vm.period._id).success(function(period) {
+        vm.period = period;
+        vm.getTransactions(vm.period)
+        sharedProperties.setValue('period', vm.period);
+      });
+    }
   });

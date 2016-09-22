@@ -31,6 +31,12 @@ angular.module('sopfApp')
       }
     });
 
+    vm.cloneTransactions = function (period) {
+      $http.put('/api/transactions/' + vm.transaction._id, vm.transaction).then(function() {
+        $location.path('/transactions');
+      });
+    }
+
     // vm.saveTransaction = function () {
     //   vm.transaction.period = vm.period;
     //   $http.put('/api/transactions/' + vm.transaction._id, vm.transaction).then(function() {

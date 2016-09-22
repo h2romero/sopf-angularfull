@@ -53,6 +53,10 @@ exports.update = function(req, res) {
 
 // Deletes a period from the DB.
 exports.destroy = function(req, res) {
+  var period = function (name) {
+    this._name = name;
+  };
+
   Period.findById(req.params.id, function (err, period) {
     if(err) { return handleError(res, err); }
     if(!period) { return res.status(404).send('Not Found'); }
