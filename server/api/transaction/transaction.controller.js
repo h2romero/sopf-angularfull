@@ -13,6 +13,7 @@ var Db = require('mongodb').Db,
   Grid = require('mongodb').Grid,
   Code = require('mongodb').Code,
   assert = require('assert');
+var async = require("async");
 
 
 // // Get list of transactions
@@ -34,41 +35,52 @@ exports.index = function(req, res) {
 // Duplicate documents
 exports.duplicate = function(req, res) {
 
-  Transaction.find({period: req.params.period}, function (err, transactions) {
-    if (err) {
-      return handleError(res, err);
-    }
-
-    var newPeriod = {};
-    Period.findById(req.params.period, function (err, period) {
-      if(err) { return handleError(res, err); }
-      if(!period) { return res.status(404).send('Not Found'); }
-      period._id = new ObjectID();
-      period.readableName = 'Clone - ' + period.readableName;
-      Period.create(period, function(err, newperiod) {
-        if(err) { return handleError(res, err); }
-        //noinspection JSAnnotator
-        transactions.forEach(function (doc) {
-          if (!doc) {
-            return res.status(404).send('Not Found');
-          }
-          doc._id = new ObjectID();
-          doc.period = newperiod._id;
-          Transaction.create(doc, function (err, transaction) {
+      Transaction.find({period: req.params.period}, function (err, transactions) {
             if (err) {
               return handleError(res, err);
             }
 
-          });
-        });
-        return res.status(201).json(newperiod);
+            var newPeriod = {};
+            Period.findById(req.params.period, function (err, period) {
+                  if(err) { return handleError(res, err); }
+                  if(!period) { return res.status(404).send('Not Found'); }
+                  console.log('period ' + period.readableName);
+                  period._id = new ObjectID();
+                  period.readableName = 'Clone - ' + period.readableName;
+
+                  Period.create(period, function(err, newperiod) {
+
+                        if(err) { return handleError(res, err); }
+                        //noinspection JSAnnotator
+                        console.log('newperiod created ' + newperiod.readableName);
+
+                    function callback () {
+                      console.log('return newperiod ' + newperiod.readableName);
+                      return res.status(201).json(newperiod);
+                    }
+                    var docsProcessed = 0;
+                        transactions.forEach(function (doc, index, array) {
+                                  if (!doc) {
+                                    return res.status(404).send('Not Found');
+                                  }
+                                  doc._id = new ObjectID();
+                                  doc.period = newperiod._id;
+                                  console.log('transactions forEach ' + doc.account);
+                                  Transaction.create(doc, function (err, transaction) {
+                                        if (err) {
+                                            return handleError(res, err);
+                                        }
+                                        console.log('transaction created ' + transaction.account);
+                                        docsProcessed++;
+                                        if (docsProcessed === array.length) {
+                                            callback();
+                                        }
+                                  });
+                          });
+
+                  });
+            });
       });
-    });
-  });
-
-
-
-
 };
 
 // // Get a single transaction
