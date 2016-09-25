@@ -58,7 +58,24 @@ exports.duplicate = function(req, res) {
                       console.log('return newperiod ' + newperiod.readableName);
                       return res.status(201).json(newperiod);
                     }
+                    function callTrans(docs) {
+                      var c = 0;
+                      docs.forEach(function (doc, index, array) {
+                        Transaction.create(doc, function (err, transaction) {
+                          if (err) {
+                            return handleError(res, err);
+                          }
+                          console.log('transaction created ' + transaction.account);
+                          c++;
+                          if (c === array.length) {
+                            callback();
+                          }
+                        });
+                      });
+
+                    }
                     var docsProcessed = 0;
+                    var docs = [];
                         transactions.forEach(function (doc, index, array) {
                                   if (!doc) {
                                     return res.status(404).send('Not Found');
@@ -66,16 +83,11 @@ exports.duplicate = function(req, res) {
                                   doc._id = new ObjectID();
                                   doc.period = newperiod._id;
                                   console.log('transactions forEach ' + doc.account);
-                                  Transaction.create(doc, function (err, transaction) {
-                                        if (err) {
-                                            return handleError(res, err);
-                                        }
-                                        console.log('transaction created ' + transaction.account);
-                                        docsProcessed++;
-                                        if (docsProcessed === array.length) {
-                                            callback();
-                                        }
-                                  });
+                                  docs.push(doc);
+                                  docsProcessed++;
+                                  if (docsProcessed === array.length) {
+                                    callTrans(docs);
+                                  }
                           });
 
                   });
