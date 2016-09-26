@@ -50,45 +50,38 @@ exports.duplicate = function(req, res) {
 
                   Period.create(period, function(err, newperiod) {
 
-                        if(err) { return handleError(res, err); }
-                        //noinspection JSAnnotator
-                        console.log('newperiod created ' + newperiod.readableName);
+                    if(err) { return handleError(res, err); }
+                    //noinspection JSAnnotator
+                    console.log('newperiod created ' + newperiod.readableName);
 
                     function callback () {
                       console.log('return newperiod ' + newperiod.readableName);
                       return res.status(201).json(newperiod);
                     }
-                    function callTrans(docs) {
-                      var c = 0;
-                      docs.forEach(function (doc, index, array) {
-                        Transaction.create(doc, function (err, transaction) {
-                          if (err) {
-                            return handleError(res, err);
-                          }
-                          console.log('transaction created ' + transaction.account);
-                          c++;
-                          if (c === array.length) {
-                            callback();
-                          }
-                        });
+
+                    var total = transactions.length, result = [];
+                    function callTrans() {
+                      var doc = transactions.pop();
+                      doc._id = new ObjectID();
+                      doc.period = newperiod._id;
+                      console.log('transactions forEach ' + doc.account);
+                      Transaction.create(doc, function (err, transaction) {
+                        if (err) {
+                          return handleError(res, err);
+                        }
+                        result.push(transaction);
+                        console.log('transaction created ' + transaction.account);
+
+                        if (--total) {
+                          callTrans();
+                        } else {
+                          callback();
+                        }
                       });
 
                     }
-                    var docsProcessed = 0;
-                    var docs = [];
-                        transactions.forEach(function (doc, index, array) {
-                                  if (!doc) {
-                                    return res.status(404).send('Not Found');
-                                  }
-                                  doc._id = new ObjectID();
-                                  doc.period = newperiod._id;
-                                  console.log('transactions forEach ' + doc.account);
-                                  docs.push(doc);
-                                  docsProcessed++;
-                                  if (docsProcessed === array.length) {
-                                    callTrans(docs);
-                                  }
-                          });
+
+                    callTrans();
 
                   });
             });
