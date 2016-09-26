@@ -35,57 +35,60 @@ exports.index = function(req, res) {
 // Duplicate documents
 exports.duplicate = function(req, res) {
 
-      Transaction.find({period: req.params.period}, function (err, transactions) {
+  Transaction.find({period: req.params.period}, function (err, transactions) {
+    if (err) {
+      return handleError(res, err);
+    }
+
+    var newPeriod = {};
+    Period.findById(req.params.period, function (err, period) {
+      if (err) {
+        return handleError(res, err);
+      }
+      if (!period) {
+        return res.status(404).send('Not Found');
+      }
+      console.log('period ' + period.readableName);
+      period._id = new ObjectID();
+      period.readableName = 'Clone - ' + period.readableName;
+
+      Period.create(period, function (err, newperiod) {
+        if (err) {
+          return handleError(res, err);
+        }
+        //noinspection JSAnnotator
+        console.log('newperiod created ' + newperiod.readableName);
+
+        function callback() {
+          console.log('return newperiod ' + newperiod.readableName);
+          return res.status(201).json(newperiod);
+        }
+
+        var total = transactions.length;
+        function callTrans() {
+          var doc = transactions.pop();
+          doc._id = new ObjectID();
+          doc.dueDate = doc.dueDate.setMonth(doc.dueDate.getMonth()+1);
+          doc.period = newperiod._id;
+          console.log('transactions forEach ' + doc.account);
+          Transaction.create(doc, function (err, transaction) {
             if (err) {
               return handleError(res, err);
             }
+            console.log('transaction created ' + transaction.account);
 
-            var newPeriod = {};
-            Period.findById(req.params.period, function (err, period) {
-                  if(err) { return handleError(res, err); }
-                  if(!period) { return res.status(404).send('Not Found'); }
-                  console.log('period ' + period.readableName);
-                  period._id = new ObjectID();
-                  period.readableName = 'Clone - ' + period.readableName;
+            if (--total) {
+              callTrans();
+            } else {
+              callback();
+            }
+          });
 
-                  Period.create(period, function(err, newperiod) {
-
-                    if(err) { return handleError(res, err); }
-                    //noinspection JSAnnotator
-                    console.log('newperiod created ' + newperiod.readableName);
-
-                    function callback () {
-                      console.log('return newperiod ' + newperiod.readableName);
-                      return res.status(201).json(newperiod);
-                    }
-
-                    var total = transactions.length, result = [];
-                    function callTrans() {
-                      var doc = transactions.pop();
-                      doc._id = new ObjectID();
-                      doc.period = newperiod._id;
-                      console.log('transactions forEach ' + doc.account);
-                      Transaction.create(doc, function (err, transaction) {
-                        if (err) {
-                          return handleError(res, err);
-                        }
-                        result.push(transaction);
-                        console.log('transaction created ' + transaction.account);
-
-                        if (--total) {
-                          callTrans();
-                        } else {
-                          callback();
-                        }
-                      });
-
-                    }
-
-                    callTrans();
-
-                  });
-            });
+        }
+        callTrans();
       });
+    });
+  });
 };
 
 // // Get a single transaction
