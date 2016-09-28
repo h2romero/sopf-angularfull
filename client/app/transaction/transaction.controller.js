@@ -5,7 +5,7 @@ angular.module('sopfApp')
     var vm = this;
 
     vm.transactionTransaction = true;
-    vm.period = null;
+    //vm.period = null;
     vm.periods = sharedProperties.getValue('periods');
 
     vm.getPeriods = function () {
