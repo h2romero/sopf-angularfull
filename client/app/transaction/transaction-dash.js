@@ -1,8 +1,9 @@
 'use strict';
 
-angular.module('sopfApp').controller("TransactionDashCtrl", function ($scope, $http, $q, $filter, $timeout, Auth, sharedProperties, socket) {
+angular.module('sopfApp').controller("TransactionDashCtrl", function ($scope, $http, $q, $filter, $timeout, envService, Auth, sharedProperties, socket) {
 
   var vm = this;
+  var url = envService.read("apiUrl")
   vm.period = null;
   //vm.periods = null;
 
@@ -11,7 +12,7 @@ angular.module('sopfApp').controller("TransactionDashCtrl", function ($scope, $h
   vm.periods = sharedProperties.getValue('periods');
 
   vm.getPeriods = function () {
-    $http.get('/api/periods/' + Auth.getCurrentUser()._id).success(function(periods) {
+    $http.get(url + '/api/periods/' + Auth.getCurrentUser()._id).success(function(periods) {
       vm.periods = periods;
       sharedProperties.setValue('periods', periods);
       //vm.period = $filter('filter')(periods, {_id: sharedProperties.getValue('period') }).pop();
@@ -22,7 +23,7 @@ angular.module('sopfApp').controller("TransactionDashCtrl", function ($scope, $h
   }
 
   vm.getTransactions = function (period) {
-    $http.get('/api/transactions/' + Auth.getCurrentUser()._id + '/' + period._id).success(function (transactions) {
+    $http.get(url + '/api/transactions/' + Auth.getCurrentUser()._id + '/' + period._id).success(function (transactions) {
       vm.transactions = transactions;
       vm.transactions2 = vm.transactions;
       sharedProperties.setValue('period', period);

@@ -9,8 +9,35 @@ angular.module('sopfApp', [
   'ui.bootstrap',
   'xeditable',
   'googlechart',
-  'inputDropdown'
+  'inputDropdown',
+  'environment'
 ])
+  .config(function(envServiceProvider) {
+    // set the domains and variables for each environment
+    envServiceProvider.config({
+      domains: {
+        development: ['localhost', 'dev.local'],
+        production: ['acme.com', 'acme.net', 'acme.org']
+        // anotherStage: []
+      },
+      vars: {
+        development: {
+          apiUrl: 'http://localhost:9000',
+          staticUrl: '//localhost/static'
+          // antoherCustomVar: ''
+        },
+        production: {
+          apiUrl: '//api.acme.com/v2',
+          staticUrl: '//static.acme.com'
+          // antoherCustomVar: ''
+        }
+      }
+    });
+
+    // run the environment check, so the comprobation is made
+    // before controllers and services are built
+    envServiceProvider.check();
+  })
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
       .otherwise('/dash/transaction');
