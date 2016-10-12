@@ -17,7 +17,7 @@ angular.module('sopfApp', [
     envServiceProvider.config({
       domains: {
         development: ['localhost', 'dev.local'],
-        production: ['acme.com', 'acme.net', 'acme.org']
+        production: ['sopf-sopf.rhcloud.com', 'acme.net', 'acme.org']
         // anotherStage: []
       },
       vars: {
