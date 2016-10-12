@@ -27,7 +27,7 @@ angular.module('sopfApp', [
           // antoherCustomVar: ''
         },
         production: {
-          apiUrl: '//api.acme.com/v2',
+          apiUrl: '//sopf-sopf.rhcloud.com',
           staticUrl: '//static.acme.com'
           // antoherCustomVar: ''
         }
