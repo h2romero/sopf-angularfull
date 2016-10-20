@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('sopfApp')
-  .controller('MainCtrl', function ($scope, $http, socket) {
+  .controller('MainCtrl', function ($scope, $http, socket, envService) {
     $scope.awesomeThings = [];
+    var url = envService.read("apiUrl");
 
-    $http.get('/api/things').success(function(awesomeThings) {
+    $http.get(url + '/api/things').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
       socket.syncUpdates('thing', $scope.awesomeThings);
     });
@@ -13,12 +14,12 @@ angular.module('sopfApp')
       if($scope.newThing === '') {
         return;
       }
-      $http.post('/api/things', { name: $scope.newThing });
+      $http.post(url + '/api/things', { name: $scope.newThing });
       $scope.newThing = '';
     };
 
     $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
+      $http.delete(url + '/api/things/' + thing._id);
     };
 
     $scope.$on('$destroy', function () {

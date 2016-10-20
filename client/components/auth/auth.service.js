@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('sopfApp')
-  .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q) {
+  .factory('Auth', function Auth($location, $rootScope, $http, User, envService, $cookieStore, $q) {
     var currentUser = {};
+    var url = envService.read("apiUrl");
     if($cookieStore.get('token')) {
       currentUser = User.get();
     }
@@ -20,7 +21,7 @@ angular.module('sopfApp')
         var cb = callback || angular.noop;
         var deferred = $q.defer();
 
-        $http.post('/auth/local', {
+        $http.post(url + '/auth/local', {
           email: user.email,
           password: user.password
         }).

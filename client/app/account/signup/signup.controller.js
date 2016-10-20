@@ -1,10 +1,9 @@
 'use strict';
 
 angular.module('sopfApp')
-  .controller('SignupCtrl', function ($scope, Auth, $location, envService, $window) {
+  .controller('SignupCtrl', function ($scope, Auth, $location, $window) {
     $scope.user = {};
     $scope.errors = {};
-    var url = envService.read("apiUrl");
 
     $scope.register = function(form) {
       $scope.submitted = true;
@@ -33,6 +32,6 @@ angular.module('sopfApp')
     };
 
     $scope.loginOauth = function(provider) {
-      $window.location.href = url + '/auth/' + provider;
+      $window.location.href = '/auth/' + provider;
     };
   });

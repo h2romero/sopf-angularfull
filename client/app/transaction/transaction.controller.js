@@ -1,15 +1,16 @@
 'use strict';
 
 angular.module('sopfApp')
-  .controller('TransactionCtrl', function ($scope, $http, $stateParams, $location, $filter, $q, socket, Auth, sharedProperties) {
+  .controller('TransactionCtrl', function ($scope, $http, $stateParams, $location, $filter, $q, socket, Auth, envService, sharedProperties) {
     var vm = this;
+    var url = envService.read("apiUrl");
 
     vm.transactionTransaction = true;
     //vm.period = null;
     vm.periods = sharedProperties.getValue('periods');
 
     vm.getPeriods = function () {
-      $http.get('/api/periods/' + Auth.getCurrentUser()._id).success(function(periods) {
+      $http.get(url + '/api/periods/' + Auth.getCurrentUser()._id).success(function(periods) {
         vm.periods = periods;
         sharedProperties.setValue('periods', periods);
         //vm.period = $filter('filter')(periods, {_id: sharedProperties.getValue('period') }).pop();
@@ -20,7 +21,7 @@ angular.module('sopfApp')
     }
 
     vm.getTransactions = function (period) {
-      $http.get('/api/transactions/' + Auth.getCurrentUser()._id + '/' + period._id).success(function(transactions) {
+      $http.get(url + '/api/transactions/' + Auth.getCurrentUser()._id + '/' + period._id).success(function(transactions) {
         vm.transactions = transactions;
         //sharedProperties.setValue('period', vm.period._id);
         sharedProperties.setValue('period', period);
@@ -83,7 +84,7 @@ angular.module('sopfApp')
     });
 
     vm.clonePeriod = function () {
-      $http.get('/api/transactions/clone/period/' + vm.period._id).success(function(period) {
+      $http.get(url + '/api/transactions/clone/period/' + vm.period._id).success(function(period) {
         vm.period = period;
         vm.getTransactions(vm.period)
         sharedProperties.setValue('period', vm.period);

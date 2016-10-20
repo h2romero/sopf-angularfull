@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('sopfApp')
-  .factory('User', function ($resource) {
-    return $resource('/api/users/:id/:controller', {
+  .factory('User', function ($resource, envService) {
+    var url = envService.read("apiUrl");
+    return $resource(url + '/api/users/:id/:controller', {
       id: '@_id'
     },
     {
