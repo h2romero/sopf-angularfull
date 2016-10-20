@@ -3,7 +3,7 @@
 angular.module('sopfApp').controller("TransactionDashCtrl", function ($scope, $http, $q, $filter, $timeout, envService, Auth, sharedProperties, socket) {
 
   var vm = this;
-  var url = envService.read("apiUrl")
+  var url = envService.read("apiUrl");
   vm.period = null;
   //vm.periods = null;
 

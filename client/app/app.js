@@ -23,6 +23,7 @@ angular.module('sopfApp', [
       vars: {
         development: {
           apiUrl: 'http://localhost:9000',
+          //apiUrl: '//sopf-sopf.rhcloud.com',
           staticUrl: '//localhost/static'
           // antoherCustomVar: ''
         },
