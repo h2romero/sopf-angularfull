@@ -23,7 +23,7 @@ angular.module('sopfApp')
     //  }
     //});
 
-    $http.get(url + 'api/transactions/'+ $stateParams.id).success(function(transaction){
+    $http.get(url + '/api/transactions/'+ $stateParams.id).success(function(transaction){
       vm.transaction = transaction;
       vm.saveTransaction = function () {
         $http.put('/api/transactions/' + vm.transaction._id, vm.transaction).then(function() {
