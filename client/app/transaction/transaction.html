@@ -28,16 +28,12 @@
 
   <label for="repeatSelect"><h4>Period&nbsp;</h4></label><br>
 
-  <!--<select name="repeatSelect" ng-model="vm.period" ng-options="p.name for p in vm.periods" ng-change="vm.getTransactions()">-->
-  <!--<option ng-repeat="period in vm.periods" ng-value="period._id">{{ period.name }}</option>-->
-  <!--</select>-->
+  <select name="repeatSelect" ng-options="p.readableName for p in vm.periods track by p._id" ng-model="vm.period"  ng-change="vm.getTransactions(vm.period)" style="width: 345px;"></select>
 
-  <!--<select name="repeatSelect" ng-options="period as period.name for period in vm.periods track by period._id" ng-model="vm.period"  ng-change="vm.getTransactions()"></select>-->
-
-  <input-dropdown selected-item="vm.period" default-dropdown-items="vm.periods"
-                  item-selected-method="vm.getTransactions(item)"
-                  input-required="true" filter-list-method="vm.filterObjectList(userInput)"
-                  aria-autocomplete="list"></input-dropdown>
+  <!--<input-dropdown selected-item="vm.period" default-dropdown-items="vm.periods"-->
+                  <!--item-selected-method="vm.getTransactions(item)"-->
+                  <!--input-required="true" filter-list-method="vm.filterObjectList(userInput)"-->
+                  <!--aria-autocomplete="list"></input-dropdown>-->
 
   <table class="table table-striped">
     <thead>

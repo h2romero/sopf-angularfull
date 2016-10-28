@@ -21,6 +21,8 @@ angular.module('sopfApp')
     }
 
     vm.getTransactions = function (period) {
+      if (!period)
+        return;
       $http.get(url + '/api/transactions/' + Auth.getCurrentUser()._id + '/' + period._id).success(function(transactions) {
         vm.transactions = transactions;
         //sharedProperties.setValue('period', vm.period._id);

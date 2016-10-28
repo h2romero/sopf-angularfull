@@ -32,7 +32,7 @@ angular.module('sopfApp')
     vm.savePeriod = function() {
       if (!vm.period._id){
         vm.period.owner = Auth.getCurrentUser()._id;
-        $http.post(url + 'api/periods', vm.period).then(function(res) {
+        $http.post(url + '/api/periods', vm.period).then(function(res) {
           vm.period = res.data;
         });
       }
@@ -42,7 +42,7 @@ angular.module('sopfApp')
       vm.savePeriod();
       $timeout(function() {
         vm.transaction.period = vm.period._id;
-        $http.post(url + 'api/transactions', vm.transaction).then(function() {
+        $http.post(url + '/api/transactions', vm.transaction).then(function() {
           sharedProperties.setValue('period', vm.period);
           $location.path('/transactions');
         });

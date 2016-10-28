@@ -29,13 +29,12 @@
       <div class="col-lg-1"></div>
       <div class="col-lg-4">
         <div class="dash-section">
-          <!--<select name="repeatSelect" ng-options="period as period.name for period in periods track by period._id" ng-model="period"  ng-change="getTransactions()"-->
-          <!--style="width: 165px;"></select>-->
-          <input-dropdown selected-item="vm.period" default-dropdown-items="vm.periods"
-                          item-selected-method="vm.getTransactions(item)"
-                          input-required="true" filter-list-method="vm.filterObjectList(userInput)"
-                          aria-autocomplete="list" style="width: 165px;"
-                          ng-show="vm.period"></input-dropdown>
+          <select name="repeatSelect" ng-options="p.readableName for p in vm.periods track by p._id" ng-model="vm.period"  ng-change="vm.getTransactions(vm.period)" style="width: 345px;"></select>
+          <!--<input-dropdown selected-item="vm.period" default-dropdown-items="vm.periods"-->
+                          <!--item-selected-method="vm.getTransactions(item)"-->
+                          <!--input-required="true" filter-list-method="vm.filterObjectList(userInput)"-->
+                          <!--aria-autocomplete="list" style="width: 165px;"-->
+                          <!--ng-show="vm.period"></input-dropdown>-->
           <div class="jumbotron dash-section text-center" style="background-color: #2f6fad">
             <h3 style="color: #FFFFFF; background-color: #2f6fad">{{vm.totalAmount | currency}}</h3>
             <div><h4 style="color: #FFFFFF; margin-bottom: 4px;">This Period</h4> &nbsp;</div>
